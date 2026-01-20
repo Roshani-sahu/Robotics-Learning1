@@ -26,7 +26,7 @@ const Header: React.FC = () => {
         {/* Navigation */}
         <nav className='hidden md:flex items-center gap-10 text-sm text-white/80'>
           <a href='#' className='text-white hover:text-white transition'>
-            Carriculum
+            Curriculum
           </a>
           <a href='#' className='hover:text-white transition'>
             Schedule
