@@ -40,9 +40,9 @@ const Schedule: React.FC = () => {
     <section className='w-full min-h-screen bg-black text-white py-28 px-6'>
       <Header />
 
-      <div className='max-w-[1300px] mt-4 mx-auto'>
+      <div className='max-w-[1300px] mt-3 mx-auto'>
         {/* Badge */}
-        <div className='flex justify-center mb-6'>
+        <div className='flex justify-center -mt-1 mb-6'>
           <span
             className='px-5 py-1.5 text-sm rounded-full border border-[#00F076] 
             text-[#00F076] bg-[#00F076]/10 backdrop-blur-sm'

@@ -45,16 +45,24 @@ const Faq: React.FC = () => {
   return (
     <div className='min-h-screen w-full bg-black text-white px-6 py-24'>
       <Header />
-
+      {/* Top Badge */}
+      <div className='flex justify-center mb-6 mt-6'>
+        <span
+          className='px-5 py-1.5 text-sm rounded-full border border-[#00F076]/60 
+              text-[#00F076] bg-[#00F076]/10 backdrop-blur-sm'
+        >
+          Questions Answered
+        </span>
+      </div>
       {/* Heading */}
-      <div className='text-center mb-16'>
+      <div className='text-center mb-14'>
         <h1 className='text-4xl md:text-6xl font-bold'>
           Frequently Asked <span className='text-[#00F076]'>Questions</span>
         </h1>
       </div>
 
       {/* FAQ Container */}
-      <div className='max-w-4xl mx-auto space-y-6'>
+      <div className='max-w-6xl mx-auto space-y-4'>
         {faqs.map((faq, index) => {
           const isOpen = openIndex === index
 
@@ -63,8 +71,8 @@ const Faq: React.FC = () => {
               key={index}
               className='
                 border border-white
-                rounded-2xl
-                px-8 py-6
+                rounded-xl
+                px-8 py-4
                 cursor-pointer
                 transition
                 hover:border-[#00F076]
@@ -72,17 +80,17 @@ const Faq: React.FC = () => {
               onClick={() => toggleFaq(index)}
             >
               <div className='flex items-center justify-between'>
-                <h3 className='text-lg md:text-xl font-semibold'>
+                <h3 className='text-base md:text-lg font-semibold'>
                   {faq.question}
                 </h3>
 
                 <span className='ml-4 text-[#00F076]'>
-                  {isOpen ? <Minus size={22} /> : <Plus size={22} />}
+                  {isOpen ? <Minus size={20} /> : <Plus size={20} />}
                 </span>
               </div>
 
               {isOpen && (
-                <p className='mt-4 text-white/70 leading-relaxed'>
+                <p className='mt-3 text-sm text-white/70 leading-relaxed'>
                   {faq.answer}
                 </p>
               )}

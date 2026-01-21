@@ -8,9 +8,15 @@ const Instructor: React.FC = () => {
 
       {/* Top Heading */}
       <div className='text-center mt-8 mb-16'>
-        <p className='tracking-widest text-sm text-[#00F076] uppercase mb-4'>
-          Meet Your Instructor
-        </p>
+        {/* Top Badge */}
+        <div className='flex justify-center mb-6 mt-6'>
+          <span
+            className='px-5 py-1.5 text-sm rounded-full border border-[#00F076]/60 
+              text-[#00F076] bg-[#00F076]/10 backdrop-blur-sm'
+          >
+            Questions Answered
+          </span>
+        </div>
         <h1 className='text-4xl md:text-6xl font-bold'>
           Dr. Rajat <span className='text-[#00F076]'>Dandekar</span>
         </h1>
@@ -75,7 +81,7 @@ const Instructor: React.FC = () => {
           <div className='grid -mt-4 grid-cols-1 md:grid-cols-3 gap-6'>
             {/* PhD */}
             <div className='flex items-center gap-4 bg-black border border-white/10 rounded-xl px-6 py-5 hover:border-[#00F076]/40 transition'>
-              <div className='w-12 h-12 rounded-lg bg-[#00F076]/10 flex items-center justify-center text-[#00F076] text-xl flex-shrink-0'>
+              <div className='w-12 h-12 rounded-lg bg-[#00F076]/30 flex items-center justify-center text-[#00F076] text-xl flex-shrink-0'>
                 🎓
               </div>
               <div>
@@ -86,7 +92,7 @@ const Instructor: React.FC = () => {
 
             {/* MTech */}
             <div className='flex items-center gap-4 bg-black border border-white/10 rounded-xl px-6 py-5 hover:border-[#00F076]/40 transition'>
-              <div className='w-12 h-12 rounded-lg bg-[#00F076]/10 flex items-center justify-center text-[#00F076] text-xl flex-shrink-0'>
+              <div className='w-12 h-12 rounded-lg bg-[#00F076]/30 flex items-center justify-center text-[#00F076] text-xl flex-shrink-0'>
                 🎓
               </div>
               <div>
@@ -97,7 +103,7 @@ const Instructor: React.FC = () => {
 
             {/* BTech */}
             <div className='flex items-center gap-4 bg-black border border-white/10 rounded-xl px-6 py-5 hover:border-[#00F076]/40 transition'>
-              <div className='w-12 h-12 rounded-lg bg-[#00F076]/10 flex items-center justify-center text-[#00F076] text-xl flex-shrink-0'>
+              <div className='w-12 h-12 rounded-lg bg-[#00F076]/30 flex items-center justify-center text-[#00F076] text-xl flex-shrink-0'>
                 🎓
               </div>
               <div>
