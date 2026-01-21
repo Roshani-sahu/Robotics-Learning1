@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { BookOpen, Clock , ChevronRight, ArrowLeft } from "lucide-react"
+import Header2 from "../components/Header2"
 
 const curriculum = [
   { title: "Zoom Link for Lectures", lessons: 1 },
@@ -22,11 +23,13 @@ const CoursePage: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
+
     <section className="min-h-screen bg-black text-white px-6 pt-24 pb-5">
-      <div className="max-w-[1300px] mx-auto space-y-10">
+      <Header2 />
+      <div className="max-w-full mx-auto space-y-10">
 
         {/* ===== TOP (OUTSIDE GRID) ===== */}
-        <div className="space-y-4">
+        <div className="space-y-4 mt-2">
           {/* Breadcrumb */}
           <div className="flex ">
           <ArrowLeft size={20} className="text-gray-400 mb-2 cursor-pointer mr-2" />
@@ -84,10 +87,10 @@ const CoursePage: React.FC = () => {
 
             {/* About */}
             <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-100">
+              <h3 className="text-3xl font-semibold mb-2 text-gray-100">
                 About This Course
               </h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-gray-300 text-base mt-5 leading-relaxed">
                 Learn to build and deploy AI models in real robots with
                 hands-on implementation.
               </p>
@@ -128,22 +131,22 @@ const CoursePage: React.FC = () => {
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <BookOpen size={18} className="text-[#00F076]" />
-                  <h3 className="font-semibold text-gray-100">
+                  <BookOpen size={20} className="text-[#00F076]" />
+                  <h3 className="font-semibold text-2xl text-gray-100">
                     Course Curriculum
                   </h3>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-gray-400">
+                <div className="flex items-center  gap-2 text-xs text-gray-400">
                   <Clock size={14} />
                   0 hrs 0 min
                 </div>
               </div>
 
-              <p className="text-xs text-gray-400 mb-6">
+              <p className="text-sm text-gray-400 mb-6">
                 10 topics • 22 lessons
               </p>
 
-              <div className="space-y-2">
+              <div className="space-y-4">
                 {curriculum.map((item, i) => (
                   <div
                     key={i}
@@ -154,14 +157,14 @@ const CoursePage: React.FC = () => {
                       onClick={() =>
                         setOpenIndex(openIndex === i ? null : i)
                       }
-                      className="w-full flex gap-4 items-center px-4 py-3"
+                      className="w-full flex gap-4 items-center px-4 py-4"
                     > <ChevronRight
                         size={16}
                         className={`transition ${
                           openIndex === i ? "rotate-90 transition-all ease-in-out duration-300" : ""
                         }`}
                       />
-                      <span className="text-sm text-gray-200">
+                      <span className="text-base text-left text-gray-200">
                         {item.title}
                       </span>
                      
@@ -179,14 +182,14 @@ const CoursePage: React.FC = () => {
 
             {/* Details */}
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-              <h4 className="font-semibold mb-4 text-gray-100">
+              <h4 className="font-semibold text-xl mb-4 text-gray-100">
                 Course Details
               </h4>
-              <div className="flex justify-between text-sm text-gray-400">
+              <div className="flex justify-between text-base text-gray-400">
                 <span>Lessons</span>
                 <span>22</span>
               </div>
-              <div className="flex justify-between text-sm text-gray-400 mt-2">
+              <div className="flex justify-between text-base text-gray-400 mt-2">
                 <span>Last Updated</span>
                 <span>Jan 19, 2026</span>
               </div>
