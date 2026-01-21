@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
       <div className='absolute inset-0 bg-gradient-to-br from-black via-black to-black opacity-90' />
 
       {/* Login Card */}
-      <div className='relative z-10 w-full max-w-md rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-[0_20px_80px_rgba(0,0,0,0.7)]'>
+      <div className='relative z-10 w-full max-w-md rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 mt-20 shadow-[0_20px_80px_rgba(0,0,0,0.7)]'>
         {/* Logo + Title */}
         <div className='text-center mb-8'>
           <img
