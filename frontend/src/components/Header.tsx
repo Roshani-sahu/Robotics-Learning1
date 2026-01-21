@@ -1,8 +1,9 @@
 import React from 'react'
 import { ChevronRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Header: React.FC = () => {
+  const navigate = useNavigate()
   return (
     <header className='fixed top-4 left-1/2 z-50 w-[96%] max-w-7xl -translate-x-1/2'>
       <div
@@ -59,6 +60,8 @@ const Header: React.FC = () => {
             whitespace-nowrap
           '
           style={{ borderColor: '#00F076' }}
+          onClick={() => navigate('/courses')}
+
         >
           Enroll Now <ChevronRight size={16} strokeWidth={2.5} />
         </button>

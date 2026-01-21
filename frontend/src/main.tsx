@@ -7,7 +7,8 @@ import HomePage from './pages/HomePage'
 import Curriculum from './pages/Curriculum'
 import Schedule from './pages/Schedule'
 import Instructor from './pages/Instructor'
-import FAQ from './pages/FAQ'
+import FAQ from './pages/Faq'
+import CoursePage from './pages/CoursePage'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/schedule' element={<Schedule />} />
         <Route path='/instructor' element={<Instructor />} />
         <Route path='/faq' element={<FAQ />} />
+        <Route path='/courses' element={<CoursePage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
