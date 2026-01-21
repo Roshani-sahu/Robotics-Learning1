@@ -8,6 +8,8 @@ import Curriculum from './pages/Curriculum'
 import Schedule from './pages/Schedule'
 import Instructor from './pages/Instructor'
 import FAQ from './pages/Faq'
+import LoginPage from './components/LoginPage'
+import SignUpPage from './components/SignUpPage'
 import CoursePage from './pages/CoursePage'
 
 createRoot(document.getElementById('root')!).render(
@@ -19,6 +21,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/schedule' element={<Schedule />} />
         <Route path='/instructor' element={<Instructor />} />
         <Route path='/faq' element={<FAQ />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<SignUpPage />} />
         <Route path='/courses' element={<CoursePage />} />
       </Routes>
     </BrowserRouter>
