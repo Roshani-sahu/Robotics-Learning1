@@ -33,15 +33,15 @@ const Header: React.FC = () => {
           >
             Curriculum
           </Link>
-          <a href='#' className='hover:text-white transition'>
+          <Link to='/schedule' className='hover:text-white transition'>
             Schedule
-          </a>
-          <a href='#' className='hover:text-white transition'>
+          </Link>
+          <Link to='/instructor' className='hover:text-white transition'>
             Instructor
-          </a>
-          <a href='#' className='hover:text-white transition'>
+          </Link>
+          <Link to='/faq' className='hover:text-white transition'>
             Faq
-          </a>
+          </Link>
         </nav>
 
         {/* CTA Button */}
