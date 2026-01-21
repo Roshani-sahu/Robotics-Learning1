@@ -293,17 +293,7 @@ const SignUpPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Add animation for progress bar */}
-      <style jsx global>{`
-        @keyframes progress {
-          from {
-            width: 0%;
-          }
-          to {
-            width: 100%;
-          }
-        }
-      `}</style>
+     
     </div>
   )
 }
