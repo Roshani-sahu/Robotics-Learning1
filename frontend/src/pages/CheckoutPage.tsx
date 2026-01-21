@@ -23,7 +23,7 @@ const CheckoutPage: React.FC = () => {
       <div className="max-w-[1250px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
 
         {/* ================= LEFT ================= */}
-        <div className="lg:col-span-7 space-y-12">
+        <div className="lg:col-span-7 space-y-8">
 
           {/* Program */}
           <div className="border border-white/10 rounded-2xl p-6 bg-white/5">
