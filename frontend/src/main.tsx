@@ -6,6 +6,8 @@ import './index.css'
 import HomePage from './pages/HomePage'
 import Curriculum from './pages/Curriculum'
 import Schedule from './pages/Schedule'
+import Instructor from './pages/Instructor'
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
@@ -13,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/' element={<HomePage />} />
         <Route path='/curriculum' element={<Curriculum />} />
         <Route path='/schedule' element={<Schedule />} />
+        <Route path='/instructor' element={<Instructor />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
