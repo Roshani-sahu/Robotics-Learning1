@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Header from '../components/Header'
+import Header2 from '../components/Header2'
 import { Mail, Lock, Eye } from 'lucide-react'
 
 const LoginPage: React.FC = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const isDisabled = !email || !password
+
   return (
     <div className='min-h-screen w-full bg-black flex items-center justify-center px-4'>
-      <Header />
+      <Header2 />
 
       {/* Background glow */}
       <div className='absolute inset-0 bg-gradient-to-br from-black via-black to-black opacity-90' />
@@ -40,6 +45,8 @@ const LoginPage: React.FC = () => {
               />
               <input
                 type='email'
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 placeholder='Enter your email'
                 className='w-full rounded-xl bg-black/40 border border-white/10 py-3 pl-10 pr-4 text-white placeholder-white/40 focus:outline-none focus:border-[#00F076]'
               />
@@ -56,6 +63,8 @@ const LoginPage: React.FC = () => {
               />
               <input
                 type='password'
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 placeholder='Enter your password'
                 className='w-full rounded-xl bg-black/40 border border-white/10 py-3 pl-10 pr-10 text-white placeholder-white/40 focus:outline-none focus:border-[#00F076]'
               />
@@ -79,7 +88,13 @@ const LoginPage: React.FC = () => {
           {/* Submit Button */}
           <button
             type='submit'
-            className='w-full rounded-xl py-3 font-semibold text-black bg-[#00F076] hover:opacity-90 transition'
+            disabled={isDisabled}
+            className={`w-full rounded-xl py-3 font-semibold transition
+              ${
+                isDisabled
+                  ? 'bg-[#00F076]/40 text-black cursor-not-allowed'
+                  : 'bg-[#00F076] text-black hover:opacity-90'
+              }`}
           >
             Sign in
           </button>
@@ -93,10 +108,10 @@ const LoginPage: React.FC = () => {
           </Link>
         </p>
 
-        {/* Footer Note */}
+        {/* Footer Note (Updated) */}
         <p className='text-[11px] text-white/40 text-center mt-6 leading-relaxed'>
-          This site is protected by reCAPTCHA and the Google Privacy Policy and
-          Terms of Service apply.
+          By signing in, you agree to our platform policies and secure usage
+          guidelines.
         </p>
       </div>
     </div>
