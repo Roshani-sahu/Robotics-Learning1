@@ -58,10 +58,10 @@ const Curriculum: React.FC = () => {
 
         <div className='max-w-[1300px] mx-auto'>
           {/* Top Badge */}
-          <div className='flex justify-center mb-6'>
+          <div className='flex justify-center mb-6 mt-6'>
             <span
               className='px-5 py-1.5 text-sm rounded-full border border-[#00F076]/60 
-              text-[#fffff] bg-[#00F076]/10 backdrop-blur-sm'
+              text-[#00F076] bg-[#00F076]/10 backdrop-blur-sm'
             >
               Comprehensive Curriculum
             </span>
@@ -73,7 +73,7 @@ const Curriculum: React.FC = () => {
           </h2>
 
           {/* Subheading */}
-          <p className='text-center text-gray-400 max-w-3xl mx-auto mb-20'>
+          <p className='text-center text-gray-400 max-w-4xl mx-auto mb-20'>
             From foundational concepts to deploying AI models on real robots —
             master every aspect of modern robot learning.
           </p>
@@ -92,7 +92,7 @@ const Curriculum: React.FC = () => {
               >
                 {/* Left Border Accent with Glow */}
                 <div
-                  className='absolute left-0 mt-16 -translate-y-1/2 w-[4px] h-3/5 
+                  className='absolute left-0 mt-16 -translate-y-1/2 w-[1px] h-2/5 
                   bg-gradient-to-b from-[#00F076] to-[#00c45f]
                   rounded-r-full shadow-[0_0_20px_rgba(0,240,118,0.7)]'
                 />

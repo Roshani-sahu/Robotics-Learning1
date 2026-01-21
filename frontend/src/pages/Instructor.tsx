@@ -5,7 +5,7 @@ const Instructor: React.FC = () => {
     <div className='min-h-screen w-full bg-black text-white px-6 py-20'>
       <Header />
       {/* Top Heading */}
-      <div className='text-center mb-16'>
+      <div className='text-center mt-8 mb-16'>
         <p className='tracking-widest text-sm text-[#00F076] uppercase mb-4'>
           Meet Your Instructor
         </p>
@@ -59,7 +59,6 @@ const Instructor: React.FC = () => {
                 href='#'
                 className='inline-flex items-center gap-2 border border-white/20 px-5 py-3 rounded-lg hover:border-[#00F076] hover:text-[#00F076] transition'
               >
-                <span className='text-lg'>in</span>
                 <span className='font-medium'>Connect on LinkedIn</span>
               </a>
             </div>

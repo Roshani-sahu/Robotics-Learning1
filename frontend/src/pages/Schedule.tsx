@@ -40,7 +40,7 @@ const Schedule: React.FC = () => {
     <section className='w-full min-h-screen bg-black text-white py-28 px-6'>
       <Header />
 
-      <div className='max-w-[1300px] mx-auto'>
+      <div className='max-w-[1300px] mt-4 mx-auto'>
         {/* Badge */}
         <div className='flex justify-center mb-6'>
           <span
@@ -291,20 +291,6 @@ const Schedule: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Footer Note */}
-        <div className='text-center mt-16 text-gray-500'>
-          <p className='mb-2'>Need help deciding?</p>
-          <a
-            href='#'
-            className='inline-flex items-center gap-2 text-[#00F076] hover:underline'
-          >
-            <span>Schedule a consultation call</span>
-            <span className='transition-transform group-hover:translate-x-1'>
-              →
-            </span>
-          </a>
         </div>
       </div>
     </section>

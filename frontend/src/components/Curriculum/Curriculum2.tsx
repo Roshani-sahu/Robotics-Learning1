@@ -61,10 +61,22 @@ const Curriculm2: React.FC = () => {
             >
               {/* Icon */}
               <div
-                className='w-12 h-12 rounded-xl bg-gradient-to-br from-[#00F076] to-[#00c45f] 
-              flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(0,240,118,0.5)]'
+                className='w-10 h-10 rounded-lg bg-gradient-to-br from-[#00F076] to-[#00c45f] 
+  flex items-center justify-center mb-4 shadow-[0_0_6px_rgba(0,240,118,0.5)]'
               >
-                <img src='/tick.png' alt='icon' className='w-6 h-6' />
+                <svg
+                  width='20'
+                  height='20'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='3'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  className='text-black'
+                >
+                  <polyline points='20 6 9 17 4 12'></polyline>
+                </svg>
               </div>
 
               {/* Title */}
