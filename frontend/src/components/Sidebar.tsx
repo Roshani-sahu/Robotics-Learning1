@@ -14,13 +14,8 @@ const Sidebar: React.FC = () => {
     <>
       {/* Sidebar for Desktop */}
       <div className='hidden md:flex flex-col w-64 min-h-screen bg-black border-r border-white/10'>
-        {/* Logo */}
-        <div className='p-6 border-b border-white/10'>
-          <img src='/media/DesignDharma.png' alt='Logo' className='h-8' />
-        </div>
-
         {/* Navigation Items */}
-        <nav className='flex-1 p-4 space-y-2'>
+        <nav className='flex-1 p-4 mt-20 space-y-2'>
           {/* Dashboard */}
           <Link
             to='/dashboard'
