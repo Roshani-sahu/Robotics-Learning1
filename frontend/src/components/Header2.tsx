@@ -1,8 +1,7 @@
 import React from 'react'
-import { ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-const Header: React.FC = () => {
+const Header2: React.FC = () => {
   return (
     <header className='fixed top-4 left-1/2 z-50 w-[96%] max-w-7xl -translate-x-1/2'>
       <div
@@ -25,46 +24,47 @@ const Header: React.FC = () => {
           />
         </Link>
 
-        {/* Navigation */}
-        <nav className='hidden md:flex items-center gap-10 text-sm text-white/80'>
+        {/* Auth Buttons */}
+        <div className='flex items-center gap-4'>
+          {/* Login */}
           <Link
-            to='/curriculum'
-            className='text-white hover:text-white transition'
+            to='/login'
+            className='
+              h-[40px]
+              px-6
+              rounded-[12px]
+              border border-white/30
+              text-white text-sm font-medium
+              hover:bg-white/10
+              transition
+              flex items-center
+              justify-center
+            '
           >
-            Curriculum
+            Login
           </Link>
-          <Link to='/schedule' className='hover:text-white transition'>
-            Schedule
-          </Link>
-          <Link to='/instructor' className='hover:text-white transition'>
-            Instructor
-          </Link>
-          <Link to='/faq' className='hover:text-white transition'>
-            Faq
-          </Link>
-        </nav>
 
-        {/* CTA Button */}
-        <button
-          className='
-            h-[40px]
-            px-8
-            rounded-[12px]
-            border-2
-            text-white text-sm font-medium
-            bg-transparent
-            hover:bg-white/10
-            transition
-            flex items-center gap-2
-            whitespace-nowrap
-          '
-          style={{ borderColor: '#00F076' }}
-        >
-          Enroll Now <ChevronRight size={16} strokeWidth={2.5} />
-        </button>
+          {/* Signup */}
+          <Link
+            to='/signup'
+            className='
+              h-[40px]
+              px-6
+              rounded-[12px]
+              text-black text-sm font-semibold
+              bg-[#00F076]
+              hover:opacity-90
+              transition
+              flex items-center
+              justify-center
+            '
+          >
+            Sign Up
+          </Link>
+        </div>
       </div>
     </header>
   )
 }
 
-export default Header
+export default Header2
