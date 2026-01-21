@@ -10,6 +10,7 @@ import Instructor from './pages/Instructor'
 import FAQ from './pages/Faq'
 import LoginPage from './components/LoginPage'
 import SignUpPage from './components/SignUpPage'
+import CoursePage from './pages/CoursePage'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/faq' element={<FAQ />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignUpPage />} />
+        <Route path='/courses' element={<CoursePage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
