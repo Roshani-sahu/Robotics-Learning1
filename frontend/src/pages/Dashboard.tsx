@@ -15,12 +15,12 @@ const Dashboard: React.FC = () => {
       <main
         className='
           flex-1
-          px-4 sm:px-6 lg:px-10
+          px-4 sm:px-6 lg:px-8
           py-20 sm:py-24
           lg:ml-[260px]
         '
       >
-        <div className='max-w-[1400px] mx-auto'>
+        <div className='w-full'>
           {' '}
           {/* Header Row */}
           <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8'>
