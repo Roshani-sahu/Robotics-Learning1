@@ -61,7 +61,7 @@ const Curriculum: React.FC = () => {
           <div className='flex justify-center mb-6'>
             <span
               className='px-5 py-1.5 text-sm rounded-full border border-[#00F076]/60 
-              text-[#00F076] bg-[#00F076]/10 backdrop-blur-sm'
+              text-[#fffff] bg-[#00F076]/10 backdrop-blur-sm'
             >
               Comprehensive Curriculum
             </span>
@@ -109,7 +109,7 @@ const Curriculum: React.FC = () => {
                       {weekData.week}
                     </span>
                   </div>
-                  <span className='text-[#00F076] font-semibold text-lg pl-2'>
+                  <span className='text-[#00F076] font-semibold text-lg mt-4 pl-2'>
                     Week {weekData.week}
                   </span>
                 </div>

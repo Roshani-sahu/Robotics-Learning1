@@ -28,7 +28,6 @@ const Schedule: React.FC = () => {
     }
   ]
 
-  // Reduced to 5 key features only
   const features = [
     'Comprehensive lecture notes',
     'Hands-on assignments with feedback',
@@ -38,157 +37,253 @@ const Schedule: React.FC = () => {
   ]
 
   return (
-    <section className='w-full min-h-screen bg-black text-white px-4 sm:px-6 py-8 flex flex-col'>
+    <section className='w-full min-h-screen bg-black text-white py-28 px-6'>
       <Header />
 
-      <div className='max-w-[1200px] mx-auto w-full flex-1 flex flex-col justify-center py-8'>
-        {/* Main Heading */}
-        <div className='text-center mb-12'>
-          <h1 className='text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent'>
+      <div className='max-w-[1300px] mx-auto'>
+        {/* Badge */}
+        <div className='flex justify-center mb-6'>
+          <span
+            className='px-5 py-1.5 text-sm rounded-full border border-[#00F076] 
+            text-[#00F076] bg-[#00F076]/10 backdrop-blur-sm'
+          >
             Bootcamp Schedule
-          </h1>
-          <p className='text-gray-400 text-lg max-w-2xl mx-auto'>
-            Join our comprehensive 10-week robotics bootcamp with expert-led
-            sessions
-          </p>
+          </span>
         </div>
 
-        {/* Schedule Row */}
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-12'>
+        {/* Heading */}
+        <h2 className='text-center text-5xl font-semibold mb-4 text-gray-200'>
+          Everything You Need to Succeed
+        </h2>
+
+        {/* Subheading */}
+        <p className='text-center text-gray-400 max-w-3xl mx-auto mb-16'>
+          Join our comprehensive 10-week robotics bootcamp with expert-led
+          sessions
+        </p>
+
+        {/* Schedule Row - Half Size Containers */}
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-16'>
           {scheduleItems.map((item, index) => {
             const Icon = item.icon
             return (
               <div
                 key={index}
-                className='relative group bg-gradient-to-br from-[#0a0e17] to-[#0d1119] border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300'
+                className='relative rounded-2xl border border-[#00F076]/30 
+                bg-gradient-to-br from-white/5 via-white/2 to-[#00F076]/5
+                backdrop-blur-xl p-5 min-h-[160px]
+                hover:border-[#00F076] transition duration-300
+                shadow-[0_4px_16px_rgba(0,0,0,0.3)]
+                hover:shadow-[0_6px_24px_rgba(0,240,118,0.15)]'
               >
-                <div className='absolute inset-0 bg-gradient-to-r from-[#00F076]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl' />
-                <div className='relative'>
-                  <div className='w-14 h-14 rounded-xl bg-gradient-to-br from-[#00F076]/20 to-[#00F076]/5 flex items-center justify-center mb-4'>
-                    <Icon size={24} className='text-[#00F076]' />
-                  </div>
-                  <h3 className='text-lg font-semibold mb-2'>{item.title}</h3>
-                  <p className='text-gray-300'>{item.description}</p>
+                {/* Icon with Smaller Glow */}
+                <div
+                  className='w-10 h-10 rounded-lg bg-gradient-to-br from-[#00F076] to-[#00c45f] 
+                  flex items-center justify-center mb-4 shadow-[0_0_12px_rgba(0,240,118,0.4)]'
+                >
+                  <Icon size={20} className='text-black' />
                 </div>
+
+                {/* Title */}
+                <h3 className='text-base font-semibold mb-1.5 text-gray-100'>
+                  {item.title}
+                </h3>
+
+                {/* Description */}
+                <p className='text-gray-300 text-sm leading-relaxed'>
+                  {item.description}
+                </p>
               </div>
             )
           })}
         </div>
 
-        {/* Pricing Section - Compact Layout */}
-        <div className='relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#05070d] via-[#070a12] to-[#04060c] border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.7)]'>
-          {/* Decorative Elements */}
-          <div className='absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00F076]/50 to-transparent' />
+        {/* Pricing Section */}
+        <div className='relative'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+            {/* Left Column - What You'll Learn */}
+            <div className='space-y-8'>
+              <div
+                className='relative rounded-3xl border border-white/10 
+                bg-gradient-to-br from-white/5 via-white/2 to-[#00F076]/5
+                backdrop-blur-xl p-8
+                hover:border-[#00F076] transition duration-300
+                shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                hover:shadow-[0_12px_48px_rgba(0,240,118,0.15)]'
+              >
+                <h3 className='text-2xl font-semibold mb-6 text-gray-100'>
+                  What You'll Learn
+                </h3>
 
-          <div className='relative grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 md:p-8'>
-            {/* Left Column - Additional Info */}
-            <div className='space-y-6'>
-              <div>
-                <h3 className='text-xl font-bold mb-3'>What You'll Learn</h3>
-                <p className='text-gray-300 mb-4 text-sm'>
+                <p className='text-gray-300 mb-6 leading-relaxed'>
                   Master the fundamentals of robotics and AI integration through
                   hands-on projects and expert guidance.
                 </p>
-                <div className='space-y-2'>
-                  <div className='flex items-center gap-3'>
-                    <div className='w-2 h-2 rounded-full bg-[#00F076]' />
-                    <span className='text-sm text-gray-400'>
-                      Live interactive sessions
-                    </span>
+
+                <div className='space-y-4'>
+                  <div className='flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition duration-300'>
+                    <div className='w-8 h-8 rounded-lg bg-[#00F076]/20 flex items-center justify-center flex-shrink-0'>
+                      <div className='w-3 h-3 rounded-full bg-[#00F076]' />
+                    </div>
+                    <div>
+                      <h4 className='font-medium text-gray-100 mb-1'>
+                        Live Sessions
+                      </h4>
+                      <p className='text-gray-400 text-sm'>
+                        Interactive 2-hour classes every Saturday
+                      </p>
+                    </div>
                   </div>
-                  <div className='flex items-center gap-3'>
-                    <div className='w-2 h-2 rounded-full bg-[#00F076]' />
-                    <span className='text-sm text-gray-400'>
-                      Recordings available
-                    </span>
+
+                  <div className='flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition duration-300'>
+                    <div className='w-8 h-8 rounded-lg bg-[#00F076]/20 flex items-center justify-center flex-shrink-0'>
+                      <div className='w-3 h-3 rounded-full bg-[#00F076]' />
+                    </div>
+                    <div>
+                      <h4 className='font-medium text-gray-100 mb-1'>
+                        Recordings
+                      </h4>
+                      <p className='text-gray-400 text-sm'>
+                        Access all session recordings anytime
+                      </p>
+                    </div>
                   </div>
-                  <div className='flex items-center gap-3'>
-                    <div className='w-2 h-2 rounded-full bg-[#00F076]' />
-                    <span className='text-sm text-gray-400'>
-                      Certificate of completion
-                    </span>
+
+                  <div className='flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition duration-300'>
+                    <div className='w-8 h-8 rounded-lg bg-[#00F076]/20 flex items-center justify-center flex-shrink-0'>
+                      <div className='w-3 h-3 rounded-full bg-[#00F076]' />
+                    </div>
+                    <div>
+                      <h4 className='font-medium text-gray-100 mb-1'>
+                        Certificate
+                      </h4>
+                      <p className='text-gray-400 text-sm'>
+                        Completion certificate for your portfolio
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className='bg-gradient-to-r from-[#00F076]/10 to-transparent border-l-4 border-[#00F076] p-3 rounded-r-lg'>
-                <div className='flex items-center gap-2 mb-1'>
-                  <Shield size={16} className='text-[#00F076]' />
-                  <h4 className='font-semibold text-sm'>Limited Seats</h4>
+              {/* Limited Seats Card */}
+              <div
+                className='relative rounded-3xl border border-[#00F076]/40 
+                bg-gradient-to-br from-[#00F076]/5 via-[#00F076]/0 to-[#00F076]/10
+                backdrop-blur-xl p-8
+                hover:border-[#00F076] transition duration-300
+                shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                hover:shadow-[0_12px_48px_rgba(0,240,118,0.15)]'
+              >
+                <div className='flex items-center gap-3 mb-4'>
+                  <div
+                    className='w-12 h-12 rounded-xl bg-gradient-to-br from-[#00F076] to-[#00c45f] 
+                    flex items-center justify-center shadow-[0_0_20px_rgba(0,240,118,0.5)]'
+                  >
+                    <Shield size={24} className='text-black' />
+                  </div>
+                  <h4 className='font-semibold text-xl text-gray-100'>
+                    Limited Seats
+                  </h4>
                 </div>
-                <p className='text-xs text-gray-300'>
-                  Only 25 spots per batch for personalized attention
+
+                <p className='text-gray-300'>
+                  Only{' '}
+                  <span className='text-[#00F076] font-bold'>25 spots</span> per
+                  batch to ensure personalized attention and hands-on guidance
+                  from instructors.
                 </p>
               </div>
             </div>
 
-            {/* Right Column - Compact Pricing Card */}
+            {/* Right Column - Pricing Card */}
             <div className='relative'>
-              <div className='relative rounded-2xl bg-gradient-to-b from-[#070d18] to-[#040812] border border-white/10 p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]'>
-                {/* Price Badge */}
-                <div className='inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#00F076]/10 border border-[#00F076]/30 mb-4'>
-                  <CreditCard size={12} className='text-[#00F076]' />
-                  <span className='text-xs font-semibold text-[#00F076] tracking-wide'>
-                    ONE-TIME PAYMENT
-                  </span>
-                </div>
-
-                {/* Price */}
-                <div className='mb-6'>
-                  <div className='flex items-baseline gap-2 mb-1'>
-                    <h3 className='text-4xl font-bold'>₹24,999</h3>
-                    <span className='text-gray-400 line-through text-sm'>
-                      ₹34,999
-                    </span>
-                    <span className='text-xs text-[#00F076] bg-[#00F076]/10 px-2 py-1 rounded'>
-                      28% OFF
+              <div className='sticky top-24'>
+                <div
+                  className='relative rounded-3xl border border-white/10 
+                  bg-gradient-to-br from-white/5 via-white/2 to-[#00F076]/5
+                  backdrop-blur-xl p-8
+                  hover:border-[#00F076] transition duration-300
+                  shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+                  hover:shadow-[0_12px_48px_rgba(0,240,118,0.15)]'
+                >
+                  {/* Price Badge */}
+                  <div
+                    className='flex items-center gap-2 px-4 py-2 rounded-full 
+                    bg-[#00F076]/10 border border-[#00F076]/30 
+                    w-fit mb-6'
+                  >
+                    <CreditCard size={16} className='text-[#00F076]' />
+                    <span className='text-sm font-semibold text-[#00F076] tracking-wide'>
+                      ONE-TIME PAYMENT
                     </span>
                   </div>
-                  <p className='text-gray-400 text-xs'>
-                    Pay once, get lifetime access • No hidden fees
-                  </p>
-                </div>
 
-                {/* 5 Features List - No Scroll */}
-                <ul className='space-y-3 mb-6'>
-                  {features.map((item, index) => (
-                    <li key={index} className='flex items-start gap-2'>
-                      <CheckCircle2
-                        size={16}
-                        className='text-[#00F076] mt-0.5 flex-shrink-0'
-                      />
-                      <span className='text-gray-300 text-sm'>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA Button */}
-                <div className='space-y-3'>
-                  <button className='w-full py-3 rounded-xl font-semibold text-base text-black bg-gradient-to-r from-[#00F076] to-[#00C864] hover:opacity-90 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-[#00F076]/20'>
-                    Enroll Now
-                  </button>
-
-                  <div className='flex flex-col items-center gap-1 text-xs text-gray-400'>
-                    <div className='flex items-center gap-2'>
-                      <div className='w-3 h-px bg-gray-600' />
-                      <span>7-day money-back guarantee</span>
-                      <div className='w-3 h-px bg-gray-600' />
-                    </div>
-
-                    {/* Compact Payment Methods */}
-                    <div className='flex items-center gap-2 mt-2'>
-                      <span className='text-xs text-gray-500'>
-                        Secure payment:
+                  {/* Price */}
+                  <div className='mb-8'>
+                    <div className='flex items-baseline gap-3 mb-2'>
+                      <h3 className='text-5xl font-bold text-gray-100'>
+                        ₹24,999
+                      </h3>
+                      <span className='text-gray-400 line-through text-lg'>
+                        ₹34,999
                       </span>
-                      <div className='flex gap-2'>
-                        {['Visa', 'Mastercard', 'UPI'].map(method => (
-                          <div
-                            key={method}
-                            className='px-2 py-1 bg-white/5 rounded text-[10px]'
-                          >
-                            {method}
-                          </div>
-                        ))}
+                      <span className='text-sm font-semibold text-[#00F076] bg-[#00F076]/10 px-3 py-1 rounded-full'>
+                        28% OFF
+                      </span>
+                    </div>
+                    <p className='text-gray-400'>
+                      Pay once, get lifetime access • No hidden fees
+                    </p>
+                  </div>
+
+                  {/* Features List */}
+                  <ul className='space-y-4 mb-8'>
+                    {features.map((item, index) => (
+                      <li key={index} className='flex items-start gap-3'>
+                        <div className='w-6 h-6 rounded-lg bg-[#00F076]/20 flex items-center justify-center flex-shrink-0'>
+                          <CheckCircle2 size={14} className='text-[#00F076]' />
+                        </div>
+                        <span className='text-gray-300'>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <div className='space-y-6'>
+                    <button
+                      className='w-full py-4 rounded-xl font-semibold text-lg 
+                      text-black bg-gradient-to-r from-[#00F076] to-[#00c45f]
+                      hover:shadow-[0_0_30px_rgba(0,240,118,0.4)]
+                      transition-all duration-300 transform hover:scale-[1.02]
+                      border border-[#00F076]/50'
+                    >
+                      Enroll Now
+                    </button>
+
+                    <div className='text-center'>
+                      <div className='flex items-center justify-center gap-2 text-sm text-gray-400 mb-4'>
+                        <div className='w-6 h-px bg-gray-600' />
+                        <span>7-day money-back guarantee</span>
+                        <div className='w-6 h-px bg-gray-600' />
+                      </div>
+
+                      {/* Payment Methods */}
+                      <div className='flex flex-col items-center gap-3'>
+                        <span className='text-xs text-gray-500'>
+                          Secure payment by
+                        </span>
+                        <div className='flex gap-3'>
+                          {['Visa', 'Mastercard', 'Razorpay', 'UPI'].map(
+                            method => (
+                              <div
+                                key={method}
+                                className='px-3 py-2 bg-white/5 rounded-lg text-xs hover:bg-white/10 transition duration-300'
+                              >
+                                {method}
+                              </div>
+                            )
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -199,13 +294,17 @@ const Schedule: React.FC = () => {
         </div>
 
         {/* Footer Note */}
-        <div className='text-center mt-6 text-gray-500 text-sm'>
-          <p>
-            Need help deciding?{' '}
-            <a href='#' className='text-[#00F076] hover:underline'>
-              Schedule a consultation call
-            </a>
-          </p>
+        <div className='text-center mt-16 text-gray-500'>
+          <p className='mb-2'>Need help deciding?</p>
+          <a
+            href='#'
+            className='inline-flex items-center gap-2 text-[#00F076] hover:underline'
+          >
+            <span>Schedule a consultation call</span>
+            <span className='transition-transform group-hover:translate-x-1'>
+              →
+            </span>
+          </a>
         </div>
       </div>
     </section>
