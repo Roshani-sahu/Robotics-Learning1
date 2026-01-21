@@ -12,6 +12,8 @@ import LoginPage from './components/LoginPage'
 import SignUpPage from './components/SignUpPage'
 import CoursePage from './pages/CoursePage'
 import Dashboard from './pages/Dashboard'
+import CheckoutPage from './pages/CheckoutPage'
+import ProfilePage from './pages/ProfilePage'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -26,6 +28,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/courses' element={<CoursePage />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/checkout' element={<CheckoutPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

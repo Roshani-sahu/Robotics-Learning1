@@ -259,7 +259,7 @@ const navigate = useNavigate()
                       hover:shadow-[0_0_30px_rgba(0,240,118,0.4)]
                       transition-all duration-300 transform hover:scale-[1.02]
                       border border-[#00F076]/50'
-                      onClick={() => navigate('/course')}
+                      onClick={() => navigate('/courses')}
                     >
                       Enroll Now
                     </button>
