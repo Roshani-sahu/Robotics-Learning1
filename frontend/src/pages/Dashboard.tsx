@@ -1,23 +1,21 @@
 import React from 'react'
 import { BookOpen, Bell } from 'lucide-react'
+// import Sidebar from '../components/Sidebar'
 import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
-import Header2 from '../components/Header2'
+// import Header2 from '../components/Header2'
 
 const Dashboard: React.FC = () => {
   return (
-    <div className='min-h-screen bg-black text-white flex'>
-      <Header2 />
-      {/* Sidebar */}
-      <Sidebar />
+    <div className=' bg-black text-white flex'>
+      
 
       {/* Main Content */}
       <main
         className='
           flex-1
           px-4 sm:px-6 lg:px-8
-          py-20 sm:py-24
-          lg:ml-[260px]
+         
+          
         '
       >
         <div className='w-full'>

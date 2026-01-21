@@ -29,9 +29,10 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/courses' element={<CoursePage />} />
-        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/checkout' element={<CheckoutPage />} />
          <Route element={<Layout />}>
+                 <Route path='/dashboard' element={<Dashboard />} />
+
         <Route path='/profile' element={<ProfilePage />} />
          </Route>
       </Routes>
