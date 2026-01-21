@@ -20,7 +20,8 @@ const Dashboard: React.FC = () => {
           lg:ml-[260px]
         '
       >
-        <div className='max-w-7xl mx-auto'>
+        <div className='max-w-[1400px] mx-auto'>
+          {' '}
           {/* Header Row */}
           <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8'>
             <h1 className='text-xl sm:text-2xl lg:text-3xl font-semibold'>
@@ -44,15 +45,23 @@ const Dashboard: React.FC = () => {
               Enabling...
             </button>
           </div>
-
           {/* Empty State Card */}
-          <div className='w-full rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,0.6)]'>
+          <div
+            className='
+  w-full
+  min-h-[420px]
+  rounded-3xl
+  border border-white/10
+  bg-white/5
+  backdrop-blur-xl
+  shadow-[0_20px_80px_rgba(0,0,0,0.6)]
+'
+          >
             <div
               className='
                 flex flex-col items-center justify-center text-center
                 px-6 sm:px-10
-                py-16 sm:py-20
-              '
+                py-20 sm:py-24              '
             >
               {/* Icon */}
               <div className='mb-5 sm:mb-6 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-white/5 border border-white/10'>
