@@ -56,9 +56,9 @@ const CoursePage: React.FC = () => {
               <div className="w-7 h-7 rounded-full bg-[#00F076]/20
                 flex items-center justify-center text-[#00F076]
                 text-xs font-semibold">
-                T
+                R
               </div>
-              <span className="text-gray-300">Team Vizuara</span>
+              <span className="text-gray-300">Robotic Learning</span>
             </div>
 
             <span className="opacity-40">•</span>

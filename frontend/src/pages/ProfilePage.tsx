@@ -6,20 +6,19 @@ import {
   ShieldCheck,
 //   CalendarDays
 } from "lucide-react"
-import Header2 from "../components/Header2"
 
 const ProfilePage: React.FC = () => {
   const [editing, setEditing] = useState(false)
 
   return (
-    <section className="min-h-screen bg-black text-white px-6 pt-24 pb-16">
-      <Header2 />
+    <section className=" bg-black text-white px-6  ">
+     
 
       <div className="max-w-[1270px]  mx-auto space-y-10">
 
         {/* ================= HEADER ================= */}
         <div>
-          <h1 className="text-4xl mt-4 font-semibold">Profile</h1>
+          <h1 className="text-4xl  font-semibold">Profile</h1>
           <p className="text-gray-400 mt-2">
             Manage your identity and account preferences
           </p>

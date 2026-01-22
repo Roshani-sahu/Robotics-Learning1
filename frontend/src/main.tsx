@@ -14,11 +14,13 @@ import CoursePage from './pages/CoursePage'
 import Dashboard from './pages/Dashboard'
 import CheckoutPage from './pages/CheckoutPage'
 import ProfilePage from './pages/ProfilePage'
+import Layout from './components/Layout'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
+         
         <Route path='/' element={<HomePage />} />
         <Route path='/curriculum' element={<Curriculum />} />
         <Route path='/schedule' element={<Schedule />} />
@@ -27,9 +29,12 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/courses' element={<CoursePage />} />
-        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/checkout' element={<CheckoutPage />} />
+         <Route element={<Layout />}>
+                 <Route path='/dashboard' element={<Dashboard />} />
+
         <Route path='/profile' element={<ProfilePage />} />
+         </Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>
