@@ -56,6 +56,17 @@ const Curriculum: React.FC = () => {
       <section className='w-full min-h-screen bg-black text-white py-24 px-6'>
         <Header />
 
+        {/* ✅ MOBILE-ONLY MEDIA QUERY */}
+        <style>
+          {`
+            @media (max-width: 768px) {
+              .green-left-border {
+                margin-top: 110px !important; /* mobile me niche shift */
+              }
+            }
+          `}
+        </style>
+
         <div className='max-w-[1300px] mx-auto'>
           {/* Top Badge */}
           <div className='flex justify-center mb-6 mt-6'>
@@ -80,7 +91,7 @@ const Curriculum: React.FC = () => {
 
           {/* Curriculum List */}
           <div className='space-y-8'>
-            {curriculumWeeks.map((weekData, index) => (
+            {curriculumWeeks.map(weekData => (
               <div
                 key={weekData.week}
                 className='relative group rounded-3xl border border-white/10 
@@ -90,14 +101,15 @@ const Curriculum: React.FC = () => {
                 shadow-[0_8px_32px_rgba(0,0,0,0.3)]
                 hover:shadow-[0_12px_48px_rgba(0,240,118,0.15)]'
               >
-                {/* Left Border Accent with Glow */}
+                {/* Left Green Border */}
                 <div
                   className='absolute left-0 mt-16 -translate-y-1/2 w-[1px] h-2/5 
                   bg-gradient-to-b from-[#00F076] to-[#00c45f]
-                  rounded-r-full shadow-[0_0_20px_rgba(0,240,118,0.7)]'
+                  rounded-r-full shadow-[0_0_20px_rgba(0,240,118,0.7)]
+                  green-left-border'
                 />
 
-                {/* Week Badge with Glow */}
+                {/* Week Badge */}
                 <div className='absolute top-0 -left-2 flex items-center gap-3'>
                   <div className='relative'>
                     <div className='absolute inset-0 w-10 h-10 bg-[#00F076] rounded-full blur-md opacity-50' />
@@ -125,7 +137,6 @@ const Curriculum: React.FC = () => {
                       {weekData.description}
                     </p>
 
-                    {/* Topics List */}
                     <div className='space-y-2 pt-4'>
                       {weekData.topics.map((topic, idx) => (
                         <div key={idx} className='flex items-center gap-3'>
@@ -136,7 +147,7 @@ const Curriculum: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Right Image/Visual */}
+                  {/* Right Visual */}
                   <div className='flex flex-col items-end justify-center'>
                     <div
                       className='relative w-full max-w-[300px] rounded-2xl overflow-hidden 
@@ -144,7 +155,7 @@ const Curriculum: React.FC = () => {
                     >
                       <div className='absolute inset-0 bg-gradient-to-br from-[#00F076]/10 to-transparent' />
                       <img
-                        src={`https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`}
+                        src='https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=80'
                         alt='Curriculum Visual'
                         className='w-full h-48 object-cover opacity-80 group-hover:opacity-100 transition duration-500'
                       />
@@ -153,12 +164,9 @@ const Curriculum: React.FC = () => {
                           <span className='text-xs text-gray-300'>
                             Hands-on Project
                           </span>
-                          <div className='flex items-center gap-1 text-[#00F076] text-sm'>
-                            <span>View Details</span>
-                            <span className='group-hover:translate-x-1 transition-transform'>
-                              →
-                            </span>
-                          </div>
+                          <span className='text-[#00F076] text-sm'>
+                            View Details →
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -175,26 +183,21 @@ const Curriculum: React.FC = () => {
             ))}
           </div>
 
-          {/* View More Button */}
+          {/* CTA */}
           <div className='flex justify-center mt-20'>
             <button
-              className='relative px-10 py-4 rounded-full font-semibold 
-              text-black bg-gradient-to-r from-[#00F076] to-[#00c45f]
+              className='px-10 py-4 rounded-full font-semibold text-black 
+              bg-gradient-to-r from-[#00F076] to-[#00c45f]
               hover:shadow-[0_0_30px_rgba(0,240,118,0.4)]
-              transition-all duration-300 transform hover:scale-[1.05]
-              border border-[#00F076]/50'
+              transition-all duration-300 hover:scale-[1.05]'
             >
               View Complete Curriculum
-              <div
-                className='absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent 
-                opacity-0 group-hover:opacity-100 transition-opacity duration-500 -translate-x-full animate-shimmer'
-              />
             </button>
           </div>
         </div>
       </section>
 
-      {/* ===== Curriculum 2 Section (Just Below) ===== */}
+      {/* ===== Curriculum 2 Section ===== */}
       <Curriculm2 />
     </>
   )
