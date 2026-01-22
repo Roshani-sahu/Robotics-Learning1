@@ -20,24 +20,68 @@ export default function HeroSection () {
       {/* Dark Overlay */}
       <div className='absolute inset-0 bg-black/60'></div>
 
-      {/* Floating animation styles */}
+      {/* Styles */}
       <style>
         {`
           @keyframes floatImage {
-            0% {
-              transform: translate(0px, 0px);
+            0% { transform: translate(0px, 0px); }
+            25% { transform: translate(7px, -7px); }
+            50% { transform: translate(-7px, 7px); }
+            75% { transform: translate(7px, 7px); }
+            100% { transform: translate(0px, 0px); }
+          }
+
+          /* ---------------- MOBILE ONLY ---------------- */
+          @media (max-width: 768px) {
+            .hero-heading {
+              font-size: 40px !important;
+              line-height: 1.4 !important;
+              margin-top:40px !important;
             }
-            25% {
-              transform: translate(7px, -7px);
+
+            .hero-subheading {
+              font-size: 18px !important;
+              margin-bottom: 0px !important;
+              margin-top: 8rem !important;
             }
-            50% {
-              transform: translate(-7px, 7px);
+
+            .hero-buttons {
+              gap: 12px !important;
+            
+              margin-top: 30px !important;
             }
-            75% {
-              transform: translate(7px, 7px);
+
+            .hero-button {
+              padding: 10px 16px !important;
+              font-size: 18px !important;
             }
-            100% {
-              transform: translate(0px, 0px);
+
+            .hero-image-wrapper {
+              margin-top: 40px !important; /* ✅ image niche shift */
+            }
+
+            .hero-image {
+              width: 405px !important;
+              height: auto !important;
+              margin-top: 0px !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .hero-heading {
+              font-size: 36px !important;
+            }
+
+            .hero-subheading {
+              font-size: 16px !important;
+            }
+
+            .hero-image-wrapper {
+              margin-top: 56px !important; /* aur niche */
+            }
+
+            .hero-image {
+              width: 200px !important;
             }
           }
         `}
@@ -49,23 +93,20 @@ export default function HeroSection () {
           className='w-full max-w-[1200px] mx-auto px-6 text-center text-white'
           style={{ fontFamily: 'Quicksand, sans-serif' }}
         >
-          {/* Written Content */}
+          {/* Text */}
           <div className='mt-36'>
-            {/* Heading */}
-            <h1 className='text-[90px] font-[700] leading-tight mt-20'>
+            <h1 className='text-[90px] font-[700] leading-tight mt-20 hero-heading'>
               Modern Robot Learning{' '}
               <span style={{ color: '#00F076' }}>Bootcamp</span>
             </h1>
 
-            {/* Subheading */}
-            <p className='text-[26px] font-[500] mb-8 text-gray-200'>
+            <p className='text-[26px] font-[500] mb-8 text-gray-200 hero-subheading'>
               Learn to build and deploy AI models in real robots
             </p>
 
-            {/* Buttons */}
-            <div className='flex items-center justify-center gap-6 mb-16 -mt-4'>
+            <div className='flex items-center justify-center gap-6 mb-16 -mt-4 hero-buttons'>
               <button
-                className='px-8 py-2 rounded-lg font-semibold text-black transition hover:opacity-90'
+                className='px-8 py-2 rounded-lg font-semibold text-black hero-button'
                 style={{ backgroundColor: '#00F076' }}
               >
                 Enroll Now — ₹25,000
@@ -73,24 +114,22 @@ export default function HeroSection () {
 
               <button
                 onClick={() => navigate('/curriculum')}
-                className='px-8 py-2 rounded-lg font-semibold bg-white text-black transition hover:bg-gray-200'
+                className='px-8 py-2 rounded-lg font-semibold bg-white text-black hero-button'
               >
                 View Curriculum
               </button>
             </div>
           </div>
 
-          {/* Center Image with Floating Animation */}
-          <div className='flex justify-center -mt-12'>
+          {/* Image */}
+          <div className='flex justify-center -mt-12 hero-image-wrapper'>
             <img
               src='/media/mainImage.png'
               alt='Robotics Learning'
               width={475}
               height={428}
-              className='select-none'
-              style={{
-                animation: 'floatImage 6s ease-in-out infinite'
-              }}
+              className='select-none hero-image'
+              style={{ animation: 'floatImage 6s ease-in-out infinite' }}
             />
           </div>
         </div>
