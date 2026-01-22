@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   BookOpen,
   Bell,
@@ -15,10 +15,16 @@ import {
 const Dashboard: React.FC = () => {
   const [isBrowsing, setIsBrowsing] = useState(false)
   const [openIndex, setOpenIndex] = useState<number | null>(null)
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(
-    'dQw4w9WgXcQ'
-  )
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [currentVideoTitle, setCurrentVideoTitle] = useState<string>('')
+  const [currentVideoType, setCurrentVideoType] = useState<string>('')
+  const [activeSubpoint, setActiveSubpoint] = useState<{
+    index: number
+    subIndex: number
+  } | null>(null)
+
+  const videoContainerRef = useRef<HTMLDivElement>(null)
 
   const curriculum = [
     {
@@ -197,13 +203,40 @@ const Dashboard: React.FC = () => {
     }
   ]
 
-  const handleVideoSelect = (videoId: string) => {
+  const handleVideoSelect = (
+    videoId: string,
+    title: string,
+    type: string,
+    index: number,
+    subIndex: number
+  ) => {
     setSelectedVideo(videoId)
+    setCurrentVideoTitle(title)
+    setCurrentVideoType(type)
+    setActiveSubpoint({ index, subIndex })
+
+    // Open the parent curriculum item
+    setOpenIndex(index)
+
+    // Scroll to video container
+    setTimeout(() => {
+      videoContainerRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }, 100)
   }
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen)
   }
+
+  // Auto-open the curriculum item when active subpoint changes
+  useEffect(() => {
+    if (activeSubpoint) {
+      setOpenIndex(activeSubpoint.index)
+    }
+  }, [activeSubpoint])
 
   return (
     <div className='bg-black text-white flex'>
@@ -361,10 +394,10 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Main Content Grid - SWAPPED POSITIONS */}
+              {/* Main Content Grid */}
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8'>
                 {/* Left Column - Video Player (8 columns) */}
-                <div className='lg:col-span-8'>
+                <div className='lg:col-span-8' ref={videoContainerRef}>
                   <div
                     className={`rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl overflow-hidden ${
                       isFullscreen ? 'fixed inset-4 z-50' : 'relative'
@@ -373,52 +406,79 @@ const Dashboard: React.FC = () => {
                     <div className='p-4 border-b border-white/10 flex items-center justify-between'>
                       <div>
                         <h3 className='font-semibold'>
-                          Now Playing: Introduction to Robotics
+                          {selectedVideo
+                            ? `Now Playing: ${currentVideoTitle}`
+                            : 'Video Player'}
                         </h3>
                         <p className='text-sm text-white/60'>
-                          Click any curriculum item to change lecture
+                          {selectedVideo
+                            ? `Click any curriculum item to change lecture`
+                            : 'Select a lecture from the curriculum to start playing'}
                         </p>
                       </div>
-                      <div className='flex items-center gap-3'>
-                        <a
-                          href={`https://www.youtube.com/watch?v=${selectedVideo}`}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-white/20 hover:border-[#00F076] transition'
-                        >
-                          <ExternalLink size={14} />
-                          Open in YouTube
-                        </a>
-                        <button
-                          onClick={toggleFullscreen}
-                          className='p-2 rounded-lg border border-white/20 hover:border-[#00F076] transition'
-                        >
-                          <Maximize2 size={18} />
-                        </button>
-                      </div>
+                      {selectedVideo && (
+                        <div className='flex items-center gap-3'>
+                          <a
+                            href={`https://www.youtube.com/watch?v=${selectedVideo}`}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-white/20 hover:border-[#00F076] transition'
+                          >
+                            <ExternalLink size={14} />
+                            Open in YouTube
+                          </a>
+                          <button
+                            onClick={toggleFullscreen}
+                            className='p-2 rounded-lg border border-white/20 hover:border-[#00F076] transition'
+                          >
+                            <Maximize2 size={18} />
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div
                       className={`${
                         isFullscreen ? 'h-[calc(100vh-120px)]' : 'h-[500px]'
-                      }`}
+                      } bg-black`}
                     >
-                      <iframe
-                        src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0&modestbranding=1`}
-                        className='w-full h-full'
-                        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                        allowFullScreen
-                      />
+                      {selectedVideo ? (
+                        <iframe
+                          src={`https://www.youtube.com/embed/${selectedVideo}?rel=0&modestbranding=1`}
+                          className='w-full h-full'
+                          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                          allowFullScreen
+                        />
+                      ) : (
+                        <div className='w-full h-full flex flex-col items-center justify-center text-white/40'>
+                          <div className='w-20 h-20 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center mb-4'>
+                            <Play size={32} className='opacity-40' />
+                          </div>
+                          <p className='text-lg'>No video selected</p>
+                          <p className='text-sm mt-2'>
+                            Choose a lecture from the curriculum to begin
+                          </p>
+                        </div>
+                      )}
                     </div>
 
-                    <div className='p-4 border-t border-white/10'>
-                      <h4 className='font-medium mb-2'>Lecture Notes</h4>
-                      <p className='text-sm text-white/60'>
-                        This lecture covers the fundamentals of robotics and
-                        imitation learning. Key topics include robot kinematics,
-                        sensor integration, and learning from demonstration.
-                      </p>
-                    </div>
+                    {selectedVideo && (
+                      <div className='p-4 border-t border-white/10'>
+                        <div className='flex items-center gap-2 mb-2'>
+                          <span className='px-2 py-1 rounded text-xs bg-[#00F076]/20 text-[#00F076]'>
+                            {currentVideoType}
+                          </span>
+                          <span className='text-sm text-white/60'>
+                            • Currently Playing
+                          </span>
+                        </div>
+                        <p className='text-sm text-white/60'>
+                          This lecture covers important concepts and practical
+                          implementation details. Take notes and follow along
+                          with the provided materials.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -556,37 +616,84 @@ const Dashboard: React.FC = () => {
 
                         {isOpen && (
                           <div className='bg-black/50 border-t border-white/10 p-3 space-y-2'>
-                            {item.subpoints.map((subpoint, subIndex) => (
-                              <div
-                                key={subIndex}
-                                className='flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition'
-                              >
-                                <div className='flex items-center gap-3'>
-                                  <div className='w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center'>
-                                    <Play size={14} className='text-white/60' />
-                                  </div>
-                                  <div>
-                                    <p className='text-sm font-medium'>
-                                      {subpoint.title}
-                                    </p>
-                                    <div className='flex items-center gap-2 text-xs text-white/60'>
-                                      <span>{subpoint.duration}</span>
-                                      <span className='px-1.5 py-0.5 rounded text-[10px] bg-white/10'>
-                                        {subpoint.type}
-                                      </span>
+                            {item.subpoints.map((subpoint, subIndex) => {
+                              const isActive =
+                                activeSubpoint?.index === i &&
+                                activeSubpoint?.subIndex === subIndex
+                              return (
+                                <div
+                                  key={subIndex}
+                                  className={`
+                                    flex items-center justify-between p-3 rounded-lg transition
+                                    ${
+                                      isActive
+                                        ? 'bg-[#00F076]/20 border border-[#00F076]/30'
+                                        : 'hover:bg-white/5'
+                                    }
+                                  `}
+                                >
+                                  <div className='flex items-center gap-3'>
+                                    <div
+                                      className={`
+                                      w-8 h-8 rounded-lg flex items-center justify-center
+                                      ${
+                                        isActive
+                                          ? 'bg-[#00F076] text-black'
+                                          : 'bg-white/10 text-white/60'
+                                      }
+                                    `}
+                                    >
+                                      {isActive ? (
+                                        <Play size={14} fill='currentColor' />
+                                      ) : (
+                                        <Play size={14} />
+                                      )}
+                                    </div>
+                                    <div>
+                                      <p
+                                        className={`text-sm font-medium ${
+                                          isActive ? 'text-[#00F076]' : ''
+                                        }`}
+                                      >
+                                        {subpoint.title}
+                                        {isActive && (
+                                          <span className='ml-2 text-xs px-1.5 py-0.5 rounded bg-[#00F076]/30'>
+                                            Playing
+                                          </span>
+                                        )}
+                                      </p>
+                                      <div className='flex items-center gap-2 text-xs text-white/60'>
+                                        <span>{subpoint.duration}</span>
+                                        <span className='px-1.5 py-0.5 rounded text-[10px] bg-white/10'>
+                                          {subpoint.type}
+                                        </span>
+                                      </div>
                                     </div>
                                   </div>
+                                  <button
+                                    onClick={() =>
+                                      handleVideoSelect(
+                                        subpoint.videoId,
+                                        subpoint.title,
+                                        subpoint.type,
+                                        i,
+                                        subIndex
+                                      )
+                                    }
+                                    className={`
+                                      text-xs px-3 py-1.5 rounded-lg border transition
+                                      ${
+                                        isActive
+                                          ? 'bg-[#00F076] text-black border-[#00F076]'
+                                          : 'bg-[#00F076]/20 border-[#00F076]/30 text-[#00F076] hover:bg-[#00F076]/30'
+                                      }
+                                    `}
+                                  >
+                                    {isActive ? 'Playing' : 'Play'}
+                                  </button>
                                 </div>
-                                <button
-                                  onClick={() =>
-                                    handleVideoSelect(subpoint.videoId)
-                                  }
-                                  className='text-xs px-3 py-1.5 rounded-lg bg-[#00F076]/20 border border-[#00F076]/30 text-[#00F076] hover:bg-[#00F076]/30 transition'
-                                >
-                                  Play
-                                </button>
-                              </div>
-                            ))}
+                              )
+                            })}
                           </div>
                         )}
                       </div>
