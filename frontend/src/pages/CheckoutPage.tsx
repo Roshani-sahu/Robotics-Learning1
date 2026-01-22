@@ -48,7 +48,7 @@ const CheckoutPage: React.FC = () => {
           </div>
 
           {/* Billing */}
-          <div className="space-y-6">
+          {/* <div className="space-y-6">
             <h3 className="text-xl font-semibold">
               Billing Information
             </h3>
@@ -62,7 +62,7 @@ const CheckoutPage: React.FC = () => {
               <input className="input" placeholder="Country" />
               <input className="input" placeholder="ZIP / Postal Code" />
             </div>
-          </div>
+          </div> */}
 
           {/* Payment Method */}
           <div className="space-y-5">
@@ -92,9 +92,9 @@ const CheckoutPage: React.FC = () => {
 
                   {/* Icons */}
                   <div className="flex gap-3 mt-2 opacity-80">
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlepay.svg" className="h-5 invert " />
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/visa.svg" className="h-5 invert" />
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/mastercard.svg" className="h-5 invert" />
+                    <img src="/media/icon/google-pay.png" className="h-5 invert " />
+                    <img src="/media/icon/visa.png" className="h-5 " />
+                    <img src="/media/icon/mastercard.png" className="h-5 " />
                   </div>
                 </div>
 
@@ -103,7 +103,7 @@ const CheckoutPage: React.FC = () => {
             </button>
 
             {/* PayPal */}
-            <button
+            {/* <button
               onClick={() => setPaymentMethod("paypal")}
               className={`w-full p-5 rounded-xl border transition text-left
               ${paymentMethod === "paypal"
@@ -131,7 +131,7 @@ const CheckoutPage: React.FC = () => {
 
                 <CreditCard className="text-gray-400" />
               </div>
-            </button>
+            </button> */}
           </div>
 
           {/* Terms */}
@@ -150,7 +150,7 @@ const CheckoutPage: React.FC = () => {
         <div className="lg:col-span-5 space-y-8">
 
           {/* Promo */}
-          <div className="rounded-2xl border border-white/10 p-6 bg-white/5">
+          {/* <div className="rounded-2xl border border-white/10 p-6 bg-white/5">
             <div className="flex items-center gap-2 mb-3">
               <Tag size={16} />
               <h4 className="font-semibold">Promo Code</h4>
@@ -162,7 +162,7 @@ const CheckoutPage: React.FC = () => {
                 Apply
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Summary */}
           <div className="rounded-2xl border border-white/10 p-6 bg-gradient-to-br from-white/5 to-black">
