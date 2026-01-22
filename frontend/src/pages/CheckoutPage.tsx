@@ -92,9 +92,9 @@ const CheckoutPage: React.FC = () => {
 
                   {/* Icons */}
                   <div className="flex gap-3 mt-2 opacity-80">
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlepay.svg" className="h-5 invert " />
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/visa.svg" className="h-5 invert" />
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/mastercard.svg" className="h-5 invert" />
+                    <img src="/media/icon/google-pay.png" className="h-5 invert " />
+                    <img src="/media/icon/visa.png" className="h-5 " />
+                    <img src="/media/icon/mastercard.png" className="h-5 " />
                   </div>
                 </div>
 
@@ -103,7 +103,7 @@ const CheckoutPage: React.FC = () => {
             </button>
 
             {/* PayPal */}
-            <button
+            {/* <button
               onClick={() => setPaymentMethod("paypal")}
               className={`w-full p-5 rounded-xl border transition text-left
               ${paymentMethod === "paypal"
@@ -131,7 +131,7 @@ const CheckoutPage: React.FC = () => {
 
                 <CreditCard className="text-gray-400" />
               </div>
-            </button>
+            </button> */}
           </div>
 
           {/* Terms */}
