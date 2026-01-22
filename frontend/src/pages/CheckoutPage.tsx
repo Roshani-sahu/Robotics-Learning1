@@ -48,7 +48,7 @@ const CheckoutPage: React.FC = () => {
           </div>
 
           {/* Billing */}
-          <div className="space-y-6">
+          {/* <div className="space-y-6">
             <h3 className="text-xl font-semibold">
               Billing Information
             </h3>
@@ -62,7 +62,7 @@ const CheckoutPage: React.FC = () => {
               <input className="input" placeholder="Country" />
               <input className="input" placeholder="ZIP / Postal Code" />
             </div>
-          </div>
+          </div> */}
 
           {/* Payment Method */}
           <div className="space-y-5">
@@ -150,7 +150,7 @@ const CheckoutPage: React.FC = () => {
         <div className="lg:col-span-5 space-y-8">
 
           {/* Promo */}
-          <div className="rounded-2xl border border-white/10 p-6 bg-white/5">
+          {/* <div className="rounded-2xl border border-white/10 p-6 bg-white/5">
             <div className="flex items-center gap-2 mb-3">
               <Tag size={16} />
               <h4 className="font-semibold">Promo Code</h4>
@@ -162,7 +162,7 @@ const CheckoutPage: React.FC = () => {
                 Apply
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Summary */}
           <div className="rounded-2xl border border-white/10 p-6 bg-gradient-to-br from-white/5 to-black">
