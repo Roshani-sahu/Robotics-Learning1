@@ -33,21 +33,22 @@ export default function HeroSection () {
 
           /* ---------------- MOBILE ONLY ---------------- */
           @media (max-width: 768px) {
+            .hero-content-shift {
+              margin-top: 100px !important; /* 🔥 whole content down */
+            }
+
             .hero-heading {
               font-size: 40px !important;
               line-height: 1.4 !important;
-              margin-top:40px !important;
             }
 
             .hero-subheading {
               font-size: 18px !important;
-              margin-bottom: 0px !important;
-              margin-top: 8rem !important;
+              margin-top: 30px !important;
             }
 
             .hero-buttons {
               gap: 12px !important;
-            
               margin-top: 30px !important;
             }
 
@@ -57,38 +58,33 @@ export default function HeroSection () {
             }
 
             .hero-image-wrapper {
-              margin-top: 40px !important; /* ✅ image niche shift */
+              margin-top: 40px !important;
             }
 
             .hero-image {
-              width: 405px !important;
+              width: 400px !important;
               height: auto !important;
-              margin-top: 0px !important;
             }
           }
 
           @media (max-width: 480px) {
             .hero-heading {
-              font-size: 36px !important;
+              font-size: 34px !important;
             }
 
             .hero-subheading {
               font-size: 16px !important;
             }
 
-            .hero-image-wrapper {
-              margin-top: 56px !important; /* aur niche */
-            }
-
             .hero-image {
-              width: 200px !important;
+              width: 220px !important;
             }
           }
         `}
       </style>
 
       {/* Content */}
-      <div className='relative z-10 flex justify-center h-full'>
+      <div className='relative z-10 flex justify-center h-full hero-content-shift'>
         <div
           className='w-full max-w-[1200px] mx-auto px-6 text-center text-white'
           style={{ fontFamily: 'Quicksand, sans-serif' }}
