@@ -11,12 +11,13 @@ import {
   Users,
   CheckCircle
 } from 'lucide-react'
-import YouTube from 'react-youtube'
 
 const Dashboard: React.FC = () => {
   const [isBrowsing, setIsBrowsing] = useState(false)
   const [openIndex, setOpenIndex] = useState<number | null>(null)
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(
+    'dQw4w9WgXcQ'
+  )
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   const curriculum = [
@@ -196,17 +197,6 @@ const Dashboard: React.FC = () => {
     }
   ]
 
-  const youtubeOpts = {
-    height: '100%',
-    width: '100%',
-    playerVars: {
-      autoplay: 1,
-      controls: 1,
-      rel: 0,
-      modestbranding: 1
-    }
-  }
-
   const handleVideoSelect = (videoId: string) => {
     setSelectedVideo(videoId)
   }
@@ -371,17 +361,76 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Main Content Grid */}
+              {/* Main Content Grid - SWAPPED POSITIONS */}
               <div className='grid grid-cols-1 lg:grid-cols-12 gap-8'>
-                {/* Left Column - About the Course (8 columns) */}
+                {/* Left Column - Video Player (8 columns) */}
                 <div className='lg:col-span-8'>
+                  <div
+                    className={`rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl overflow-hidden ${
+                      isFullscreen ? 'fixed inset-4 z-50' : 'relative'
+                    }`}
+                  >
+                    <div className='p-4 border-b border-white/10 flex items-center justify-between'>
+                      <div>
+                        <h3 className='font-semibold'>
+                          Now Playing: Introduction to Robotics
+                        </h3>
+                        <p className='text-sm text-white/60'>
+                          Click any curriculum item to change lecture
+                        </p>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <a
+                          href={`https://www.youtube.com/watch?v=${selectedVideo}`}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-white/20 hover:border-[#00F076] transition'
+                        >
+                          <ExternalLink size={14} />
+                          Open in YouTube
+                        </a>
+                        <button
+                          onClick={toggleFullscreen}
+                          className='p-2 rounded-lg border border-white/20 hover:border-[#00F076] transition'
+                        >
+                          <Maximize2 size={18} />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div
+                      className={`${
+                        isFullscreen ? 'h-[calc(100vh-120px)]' : 'h-[500px]'
+                      }`}
+                    >
+                      <iframe
+                        src={`https://www.youtube.com/embed/${selectedVideo}?autoplay=1&rel=0&modestbranding=1`}
+                        className='w-full h-full'
+                        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                        allowFullScreen
+                      />
+                    </div>
+
+                    <div className='p-4 border-t border-white/10'>
+                      <h4 className='font-medium mb-2'>Lecture Notes</h4>
+                      <p className='text-sm text-white/60'>
+                        This lecture covers the fundamentals of robotics and
+                        imitation learning. Key topics include robot kinematics,
+                        sensor integration, and learning from demonstration.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - About the Course (4 columns) */}
+                <div className='lg:col-span-4'>
                   <div className='rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 md:p-8'>
-                    <div className='relative pl-6 mb-8'>
+                    <div className='relative pl-6 mb-6'>
                       <div className='absolute left-0 top-0 h-full w-[2px] bg-[#00F076]/40' />
                       <h3 className='text-2xl font-semibold text-white mb-3'>
                         About This Course
                       </h3>
-                      <p className='text-gray-300 leading-relaxed'>
+                      <p className='text-gray-300 leading-relaxed text-sm'>
                         This comprehensive bootcamp takes you through the
                         complete journey of modern robot learning. Starting from
                         fundamental concepts of imitation learning, we dive deep
@@ -389,216 +438,162 @@ const Dashboard: React.FC = () => {
                         transformer architectures, and their practical
                         implementation on real robots.
                       </p>
-                      <p className='text-gray-300 leading-relaxed mt-4'>
-                        You'll gain hands-on experience with the SO-101 robot
-                        platform and learn to implement state-of-the-art ACT
-                        (Action Chunking with Transformers) policies. The course
-                        combines theoretical foundations with practical
-                        implementation, ensuring you're ready to tackle
-                        real-world robotics challenges.
-                      </p>
-                      <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>
-                        <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
-                          <CheckCircle size={18} className='text-[#00F076]' />
-                          <div>
-                            <p className='font-medium'>Hands-on Projects</p>
-                            <p className='text-sm text-white/60'>
-                              Real robot implementation
-                            </p>
-                          </div>
+                    </div>
+
+                    <div className='space-y-3'>
+                      <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
+                        <CheckCircle size={18} className='text-[#00F076]' />
+                        <div>
+                          <p className='font-medium text-sm'>
+                            Hands-on Projects
+                          </p>
+                          <p className='text-xs text-white/60'>
+                            Real robot implementation
+                          </p>
                         </div>
-                        <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
-                          <CheckCircle size={18} className='text-[#00F076]' />
-                          <div>
-                            <p className='font-medium'>Live Sessions</p>
-                            <p className='text-sm text-white/60'>
-                              Weekly Q&A with instructors
-                            </p>
-                          </div>
+                      </div>
+                      <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
+                        <CheckCircle size={18} className='text-[#00F076]' />
+                        <div>
+                          <p className='font-medium text-sm'>Live Sessions</p>
+                          <p className='text-xs text-white/60'>
+                            Weekly Q&A with instructors
+                          </p>
                         </div>
-                        <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
-                          <CheckCircle size={18} className='text-[#00F076]' />
-                          <div>
-                            <p className='font-medium'>Code Repository</p>
-                            <p className='text-sm text-white/60'>
-                              Complete project codebase
-                            </p>
-                          </div>
+                      </div>
+                      <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
+                        <CheckCircle size={18} className='text-[#00F076]' />
+                        <div>
+                          <p className='font-medium text-sm'>Code Repository</p>
+                          <p className='text-xs text-white/60'>
+                            Complete project codebase
+                          </p>
                         </div>
-                        <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
-                          <CheckCircle size={18} className='text-[#00F076]' />
-                          <div>
-                            <p className='font-medium'>Community Access</p>
-                            <p className='text-sm text-white/60'>
-                              Discord community 24/7
-                            </p>
-                          </div>
+                      </div>
+                      <div className='flex items-center gap-3 p-3 rounded-lg bg-white/5'>
+                        <CheckCircle size={18} className='text-[#00F076]' />
+                        <div>
+                          <p className='font-medium text-sm'>
+                            Community Access
+                          </p>
+                          <p className='text-xs text-white/60'>
+                            Discord community 24/7
+                          </p>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Right Column - Course Curriculum (4 columns) */}
-                <div className='lg:col-span-4'>
-                  <div className='rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sticky top-6'>
-                    <div className='flex items-center justify-between mb-6'>
-                      <h3 className='text-xl font-semibold'>
-                        Course Curriculum
-                      </h3>
-                      <div className='flex items-center gap-2 text-sm text-white/60'>
-                        <Clock size={14} />
-                        <span>22 sessions</span>
-                      </div>
-                    </div>
-
-                    <div className='space-y-2 max-h-[600px] overflow-y-auto pr-2'>
-                      {curriculum.map((item, i) => {
-                        const isOpen = openIndex === i
-                        return (
-                          <div
-                            key={i}
-                            className='border border-white/10 rounded-xl overflow-hidden'
-                          >
-                            <button
-                              onClick={() => setOpenIndex(isOpen ? null : i)}
-                              className={`
-                                w-full text-left px-4 py-3
-                                transition-all duration-300
-                                ${
-                                  isOpen
-                                    ? 'bg-[#00F076]/10'
-                                    : 'bg-white/5 hover:bg-white/10'
-                                }
-                              `}
-                            >
-                              <div className='flex items-center justify-between'>
-                                <span className='text-sm font-medium'>
-                                  {item.title}
-                                </span>
-                                <div className='flex items-center gap-3'>
-                                  {item.lessons > 0 && (
-                                    <span className='text-xs px-2 py-1 rounded-full bg-white/10'>
-                                      {item.lessons} item
-                                      {item.lessons !== 1 ? 's' : ''}
-                                    </span>
-                                  )}
-                                  <ChevronDown
-                                    size={16}
-                                    className={`
-                                      transition-transform duration-300
-                                      ${
-                                        isOpen
-                                          ? 'rotate-180 text-[#00F076]'
-                                          : 'text-white/40'
-                                      }
-                                    `}
-                                  />
-                                </div>
-                              </div>
-                            </button>
-
-                            {isOpen && (
-                              <div className='bg-black/50 border-t border-white/10 p-3 space-y-2'>
-                                {item.subpoints.map((subpoint, subIndex) => (
-                                  <div
-                                    key={subIndex}
-                                    className='flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition'
-                                  >
-                                    <div className='flex items-center gap-3'>
-                                      <div className='w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center'>
-                                        <Play
-                                          size={14}
-                                          className='text-white/60'
-                                        />
-                                      </div>
-                                      <div>
-                                        <p className='text-sm font-medium'>
-                                          {subpoint.title}
-                                        </p>
-                                        <div className='flex items-center gap-2 text-xs text-white/60'>
-                                          <span>{subpoint.duration}</span>
-                                          <span className='px-1.5 py-0.5 rounded text-[10px] bg-white/10'>
-                                            {subpoint.type}
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <button
-                                      onClick={() =>
-                                        handleVideoSelect(subpoint.videoId)
-                                      }
-                                      className='text-xs px-3 py-1.5 rounded-lg bg-[#00F076]/20 border border-[#00F076]/30 text-[#00F076] hover:bg-[#00F076]/30 transition'
-                                    >
-                                      Play
-                                    </button>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        )
-                      })}
+                    <div className='mt-6 pt-6 border-t border-white/10'>
+                      <h4 className='font-medium mb-2 text-sm'>
+                        Prerequisites
+                      </h4>
+                      <ul className='text-xs text-white/60 space-y-1'>
+                        <li>• Basic Python programming</li>
+                        <li>• Understanding of linear algebra</li>
+                        <li>• Familiarity with machine learning concepts</li>
+                        <li>• No robotics experience required</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Video Player Section */}
-              {selectedVideo && (
-                <div
-                  className={`rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl overflow-hidden ${
-                    isFullscreen ? 'fixed inset-4 z-50' : 'relative'
-                  }`}
-                >
-                  <div className='p-4 border-b border-white/10 flex items-center justify-between'>
-                    <div>
-                      <h3 className='font-semibold'>
-                        Now Playing: Selected Lecture
-                      </h3>
-                      <p className='text-sm text-white/60'>
-                        Click any curriculum item to start learning
-                      </p>
-                    </div>
-                    <div className='flex items-center gap-3'>
-                      <a
-                        href={`https://www.youtube.com/watch?v=${selectedVideo}`}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-white/20 hover:border-[#00F076] transition'
-                      >
-                        <ExternalLink size={14} />
-                        Open in YouTube
-                      </a>
-                      <button
-                        onClick={toggleFullscreen}
-                        className='p-2 rounded-lg border border-white/20 hover:border-[#00F076] transition'
-                      >
-                        <Maximize2 size={18} />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`${
-                      isFullscreen ? 'h-[calc(100vh-120px)]' : 'h-[500px]'
-                    }`}
-                  >
-                    <YouTube
-                      videoId={selectedVideo}
-                      opts={youtubeOpts}
-                      className='w-full h-full'
-                    />
-                  </div>
-
-                  <div className='p-4 border-t border-white/10 text-sm text-white/60'>
-                    <p>
-                      Use the curriculum panel on the right to browse and select
-                      different lectures.
-                    </p>
+              {/* Curriculum Section - Below the main grid */}
+              <div className='rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 md:p-8'>
+                <div className='flex items-center justify-between mb-6'>
+                  <h3 className='text-2xl font-semibold'>Course Curriculum</h3>
+                  <div className='flex items-center gap-2 text-sm text-white/60'>
+                    <Clock size={14} />
+                    <span>22 sessions • 156 lectures</span>
                   </div>
                 </div>
-              )}
+
+                <div className='space-y-2'>
+                  {curriculum.map((item, i) => {
+                    const isOpen = openIndex === i
+                    return (
+                      <div
+                        key={i}
+                        className='border border-white/10 rounded-xl overflow-hidden'
+                      >
+                        <button
+                          onClick={() => setOpenIndex(isOpen ? null : i)}
+                          className={`
+                            w-full text-left px-4 py-3
+                            transition-all duration-300
+                            ${
+                              isOpen
+                                ? 'bg-[#00F076]/10'
+                                : 'bg-white/5 hover:bg-white/10'
+                            }
+                          `}
+                        >
+                          <div className='flex items-center justify-between'>
+                            <span className='text-sm font-medium'>
+                              {item.title}
+                            </span>
+                            <div className='flex items-center gap-3'>
+                              {item.lessons > 0 && (
+                                <span className='text-xs px-2 py-1 rounded-full bg-white/10'>
+                                  {item.lessons} item
+                                  {item.lessons !== 1 ? 's' : ''}
+                                </span>
+                              )}
+                              <ChevronDown
+                                size={16}
+                                className={`
+                                  transition-transform duration-300
+                                  ${
+                                    isOpen
+                                      ? 'rotate-180 text-[#00F076]'
+                                      : 'text-white/40'
+                                  }
+                                `}
+                              />
+                            </div>
+                          </div>
+                        </button>
+
+                        {isOpen && (
+                          <div className='bg-black/50 border-t border-white/10 p-3 space-y-2'>
+                            {item.subpoints.map((subpoint, subIndex) => (
+                              <div
+                                key={subIndex}
+                                className='flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition'
+                              >
+                                <div className='flex items-center gap-3'>
+                                  <div className='w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center'>
+                                    <Play size={14} className='text-white/60' />
+                                  </div>
+                                  <div>
+                                    <p className='text-sm font-medium'>
+                                      {subpoint.title}
+                                    </p>
+                                    <div className='flex items-center gap-2 text-xs text-white/60'>
+                                      <span>{subpoint.duration}</span>
+                                      <span className='px-1.5 py-0.5 rounded text-[10px] bg-white/10'>
+                                        {subpoint.type}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <button
+                                  onClick={() =>
+                                    handleVideoSelect(subpoint.videoId)
+                                  }
+                                  className='text-xs px-3 py-1.5 rounded-lg bg-[#00F076]/20 border border-[#00F076]/30 text-[#00F076] hover:bg-[#00F076]/30 transition'
+                                >
+                                  Play
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
           )}
         </div>
