@@ -6,10 +6,12 @@ import {
   ArrowLeft,
   Play,
   Maximize2,
+  Minimize2,
   ExternalLink,
   Clock,
   Users,
-  CheckCircle
+  CheckCircle,
+  RotateCw
 } from 'lucide-react'
 
 const Dashboard: React.FC = () => {
@@ -23,8 +25,10 @@ const Dashboard: React.FC = () => {
     index: number
     subIndex: number
   } | null>(null)
+  const [isRotated, setIsRotated] = useState(false)
 
   const videoContainerRef = useRef<HTMLDivElement>(null)
+  const fullscreenRef = useRef<HTMLDivElement>(null)
 
   const curriculum = [
     {
@@ -228,8 +232,31 @@ const Dashboard: React.FC = () => {
   }
 
   const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen)
+    if (!isFullscreen) {
+      setIsFullscreen(true)
+      setIsRotated(false) // Reset rotation when entering fullscreen
+    } else {
+      setIsFullscreen(false)
+      setIsRotated(false) // Reset rotation when exiting fullscreen
+    }
   }
+
+  const toggleRotate = () => {
+    setIsRotated(!isRotated)
+  }
+
+  // Handle escape key to exit fullscreen
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false)
+        setIsRotated(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [isFullscreen])
 
   // Auto-open the curriculum item when active subpoint changes
   useEffect(() => {
@@ -399,9 +426,19 @@ const Dashboard: React.FC = () => {
                 {/* Left Column - Video Player (8 columns) */}
                 <div className='lg:col-span-8' ref={videoContainerRef}>
                   <div
-                    className={`rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl overflow-hidden ${
-                      isFullscreen ? 'fixed inset-4 z-50' : 'relative'
-                    }`}
+                    ref={fullscreenRef}
+                    className={`
+                      rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl overflow-hidden
+                      ${
+                        isFullscreen
+                          ? 'fixed inset-0 z-50 m-0 rounded-none'
+                          : 'relative'
+                      }
+                      ${isRotated ? 'transform rotate-90' : ''}
+                    `}
+                    style={{
+                      transition: 'transform 0.3s ease'
+                    }}
                   >
                     <div className='p-4 border-b border-white/10 flex items-center justify-between'>
                       <div>
@@ -422,25 +459,43 @@ const Dashboard: React.FC = () => {
                             href={`https://www.youtube.com/watch?v=${selectedVideo}`}
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-white/20 hover:border-[#00F076] transition'
+                            className='hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-white/20 hover:border-[#00F076] transition'
                           >
                             <ExternalLink size={14} />
-                            Open in YouTube
+                            <span className='hidden sm:inline'>
+                              Open in YouTube
+                            </span>
                           </a>
+                          {/* Mobile rotate button - only show in fullscreen mode */}
+                          {isFullscreen && (
+                            <button
+                              onClick={toggleRotate}
+                              className='p-2 rounded-lg border border-white/20 hover:border-[#00F076] transition sm:hidden'
+                              title='Rotate Screen'
+                            >
+                              <RotateCw size={18} />
+                            </button>
+                          )}
                           <button
                             onClick={toggleFullscreen}
                             className='p-2 rounded-lg border border-white/20 hover:border-[#00F076] transition'
                           >
-                            <Maximize2 size={18} />
+                            {isFullscreen ? (
+                              <Minimize2 size={18} />
+                            ) : (
+                              <Maximize2 size={18} />
+                            )}
                           </button>
                         </div>
                       )}
                     </div>
 
                     <div
-                      className={`${
-                        isFullscreen ? 'h-[calc(100vh-120px)]' : 'h-[500px]'
-                      } bg-black`}
+                      className={`
+                        ${isFullscreen ? 'h-[calc(100vh-64px)]' : 'h-[500px]'}
+                        ${isRotated ? 'h-[calc(100vw-64px)]' : ''}
+                        bg-black
+                      `}
                     >
                       {selectedVideo ? (
                         <iframe
@@ -594,7 +649,7 @@ const Dashboard: React.FC = () => {
                             </span>
                             <div className='flex items-center gap-3'>
                               {item.lessons > 0 && (
-                                <span className='text-xs px-2 py-1 rounded-full bg-white/10'>
+                                <span className='text-xs px-3 py-1 rounded-full bg-white/10 min-w-[4rem] text-center'>
                                   {item.lessons} item
                                   {item.lessons !== 1 ? 's' : ''}
                                 </span>
@@ -681,7 +736,7 @@ const Dashboard: React.FC = () => {
                                       )
                                     }
                                     className={`
-                                      text-xs px-3 py-1.5 rounded-lg border transition
+                                      text-xs px-4 py-1.5 rounded-lg border transition whitespace-nowrap
                                       ${
                                         isActive
                                           ? 'bg-[#00F076] text-black border-[#00F076]'
