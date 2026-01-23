@@ -2,18 +2,16 @@ import React, { useState } from "react"
 import {
   Camera,
   Mail,
-//   User,
   ShieldCheck,
-//   CalendarDays
 } from "lucide-react"
+import { useAuth } from '../context/AuthContext'
 
 const ProfilePage: React.FC = () => {
+  const { user } = useAuth()
   const [editing, setEditing] = useState(false)
 
   return (
     <section className=" bg-black text-white px-6  ">
-     
-
       <div className="max-w-[1270px]  mx-auto space-y-10">
 
         {/* ================= HEADER ================= */}
@@ -53,18 +51,18 @@ const ProfilePage: React.FC = () => {
                 </div>
 
                 <h3 className="mt-4 text-xl font-semibold">
-                  Roshani Sahu
+                  {user?.email?.split('@')[0] || 'User'}
                 </h3>
                 <p className="text-sm text-gray-400">
-                  Student • Active
+                  Student • {user?.emailVerified ? 'Verified' : 'Unverified'}
                 </p>
               </div>
 
               {/* Account Chips */}
               <div className="mt-8 space-y-4">
                 <StatusItem label="Role" value="Student" color="green" />
-                <StatusItem label="Status" value="Active" color="pink" />
-                <StatusItem label="Member Since" value="Jan 21, 2026" />
+                <StatusItem label="Status" value={user?.emailVerified ? 'Verified' : 'Unverified'} color={user?.emailVerified ? 'green' : 'pink'} />
+                <StatusItem label="Member Since" value={new Date().toLocaleDateString()} />
               </div>
             </div>
           </div>
@@ -88,12 +86,12 @@ const ProfilePage: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input label="First Name" value="Roshani" disabled={!editing} />
+                <Input label="First Name" value={user?.email?.split('@')[0] || ''} disabled={!editing} />
                 <Input label="Middle Name" placeholder="Optional" disabled={!editing} />
-                <Input label="Last Name" value="Sahu" disabled={!editing} />
+                <Input label="Last Name" value="" disabled={!editing} />
                 <Input
                   label="Email"
-                  value="roshanishahu2003@gmail.com"
+                  value={user?.email || ''}
                   disabled
                   icon={<Mail size={16} />}
                   helper="Email cannot be changed"
@@ -105,7 +103,7 @@ const ProfilePage: React.FC = () => {
             <section className="pt-8 border-t border-white/10">
               <div className="flex items-center gap-3 text-gray-300">
                 <ShieldCheck className="text-[#00F076]" />
-                Your account is verified and secure
+                Your account is {user?.emailVerified ? 'verified and secure' : 'created but not verified'}
               </div>
             </section>
           </div>

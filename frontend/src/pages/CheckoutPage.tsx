@@ -7,10 +7,37 @@ import {
   CheckCircle
 } from "lucide-react"
 import Header2 from "../components/Header2"
+import { usePayment } from "../hooks/usePayment"
+import { useAuth } from "../context/AuthContext"
 
 const CheckoutPage: React.FC = () => {
+  const { user } = useAuth()
+  const { initializePayment, loading } = usePayment()
   const [paymentMethod, setPaymentMethod] = useState<"razorpay" | "paypal">("razorpay")
   const [agree, setAgree] = useState(false)
+
+  // Sample course data - replace with actual course data
+  const courseData = {
+    id: "i3fqAkTyIANhEIgnGXCx", // Real course ID from Firestore
+    title: "Modern Robot Learning from Scratch",
+    price: 24999
+  }
+
+  const handlePayment = () => {
+    if (!agree) return
+    
+    if (!user) {
+      alert('Please login first');
+      return;
+    }
+    
+    if (paymentMethod === "razorpay") {
+      console.log('User authenticated:', user.email);
+      initializePayment(courseData.id)
+    } else {
+      alert("PayPal integration coming soon!")
+    }
+  }
 
   return (
     <section className="min-h-screen bg-black text-white px-6 pt-24 pb-16">
@@ -189,15 +216,16 @@ const CheckoutPage: React.FC = () => {
 
           {/* CTA */}
           <button
-            disabled={!agree}
+            onClick={handlePayment}
+            disabled={!agree || loading}
             className={`w-full py-4 rounded-xl font-semibold text-black
             flex items-center justify-center gap-2 transition
-            ${agree
+            ${agree && !loading
               ? "bg-[#00F076] hover:scale-[1.02]"
               : "bg-gray-600 cursor-not-allowed"}`}
           >
             <Lock size={16} />
-            Pay ₹24,999 & Enroll Now
+            {loading ? "Processing..." : "Pay ₹24,999 & Enroll Now"}
           </button>
         </div>
       </div>
