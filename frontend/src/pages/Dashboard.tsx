@@ -59,7 +59,8 @@ const Dashboard: React.FC = () => {
           {/* Header Row */}
           <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8'>
             <h1 className='text-xl sm:text-2xl lg:text-3xl font-semibold'>
-              My Courses <span className='text-white/60'>({purchases.length})</span>
+              My Courses{' '}
+              <span className='text-white/60'>({purchases.length})</span>
             </h1>
 
             <button
@@ -81,7 +82,9 @@ const Dashboard: React.FC = () => {
           </div>
 
           {loading ? (
-            <div className='text-center py-20 text-white/60'>Loading courses...</div>
+            <div className='text-center py-20 text-white/60'>
+              Loading courses...
+            </div>
           ) : purchases.length === 0 ? (
             /* Empty State Card */
             <div
@@ -104,7 +107,10 @@ const Dashboard: React.FC = () => {
                 {/* Icon */}
                 <div className='mb-5 sm:mb-6 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-white/5 border border-white/10'>
                   <BookOpen size={28} className='text-white/70 sm:hidden' />
-                  <BookOpen size={32} className='text-white/70 hidden sm:block' />
+                  <BookOpen
+                    size={32}
+                    className='text-white/70 hidden sm:block'
+                  />
                 </div>
 
                 {/* Text */}
@@ -137,55 +143,56 @@ const Dashboard: React.FC = () => {
             </div>
           ) : (
             /* Course Grid */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {purchases.map((purchase) => (
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+              {purchases.map(purchase => (
                 <div
                   key={purchase.id}
-                  className="
+                  className='
                      rounded-2xl
                      border border-white/10
                      bg-white/5
                      overflow-hidden
                      hover:border-[#00F076]/40
                      transition duration-300
-                   "
+                   '
                 >
                   {/* Thumbnail */}
-                  <div className="relative h-48 bg-gray-800">
-                    {purchase.course?.thumbnail && !imageErrors.has(purchase.courseId) ? (
+                  <div className='relative h-48 bg-gray-800'>
+                    {purchase.course?.thumbnail &&
+                    !imageErrors.has(purchase.courseId) ? (
                       <img
                         src={purchase.course.thumbnail}
                         alt={purchase.course.title}
-                        className="w-full h-full object-cover"
+                        className='w-full h-full object-cover'
                         onError={() => handleImageError(purchase.courseId)}
                       />
                     ) : (
                       <img
-                        src="/media/course/Vizuara-AI-Labs.png"
-                        alt="Course placeholder"
-                        className="w-full h-full object-cover opacity-50"
+                        src='/media/course/Vizuara-AI-Labs.png'
+                        alt='Course placeholder'
+                        className='w-full h-full object-cover opacity-50'
                       />
                     )}
-                    <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-[#00F076] border border-[#00F076]/20">
+                    <div className='absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-[#00F076] border border-[#00F076]/20'>
                       Active
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 space-y-4">
+                  <div className='p-6 space-y-4'>
                     <div>
-                      <h3 className="text-lg font-semibold line-clamp-2 mb-1">
+                      <h3 className='text-lg font-semibold line-clamp-2 mb-1'>
                         {purchase.course?.title || 'Unknown Course'}
                       </h3>
-                      <p className="text-sm text-white/50 line-clamp-2">
+                      <p className='text-sm text-white/50 line-clamp-2'>
                         {purchase.course?.description}
                       </p>
                     </div>
 
-                    <div className="pt-4 border-t border-white/5 flex items-center gap-3">
+                    <div className='pt-4 border-t border-white/5 flex items-center gap-3'>
                       <button
                         onClick={() => handleAccessCourse(purchase.courseId)}
-                        className="flex-1 bg-[#00F076] hover:bg-[#00D064] text-black font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition"
+                        className='flex-1 bg-[#00F076] hover:bg-[#00D064] text-black font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition'
                       >
                         <PlayCircle size={18} />
                         Access Course

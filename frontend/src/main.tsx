@@ -18,7 +18,7 @@ import ProfilePage from './pages/ProfilePage'
 import Layout from './components/Layout'
 import { AuthProvider } from './context/AuthContext'
 
-import PurchasedCourse from "./pages/PurchasedCourse.tsx"
+import PurchasedCourse from './pages/PurchasedCourse.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -38,9 +38,10 @@ createRoot(document.getElementById('root')!).render(
           <Route element={<Layout />}>
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/purchased-course/:courseId' element={<PurchasedCourse/>} />
-       
-            
+            <Route
+              path='/purchased-course/:courseId'
+              element={<PurchasedCourse />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
