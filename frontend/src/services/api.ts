@@ -18,6 +18,7 @@ api.interceptors.request.use(async (config) => {
 
 export const authAPI = {
   getProfile: () => api.get('/auth/profile'),
+  updateProfile: (data: any) => api.put('/auth/profile', data),
 };
 
 export const courseAPI = {

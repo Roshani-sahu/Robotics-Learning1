@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Header2 from '../components/Header2'
 import { Mail, Lock, Eye } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const { login } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -23,7 +24,8 @@ const LoginPage: React.FC = () => {
 
     try {
       await login(email, password)
-      navigate('/dashboard')
+      const from = (location.state as any)?.from || '/dashboard'
+      navigate(from, { replace: true })
     } catch (error: any) {
       setError(error.message || 'Login failed')
     } finally {
@@ -118,10 +120,9 @@ const LoginPage: React.FC = () => {
             type='submit'
             disabled={isDisabled}
             className={`w-full rounded-xl py-3 font-semibold transition
-              ${
-                isDisabled
-                  ? 'bg-[#00F076]/40 text-black cursor-not-allowed'
-                  : 'bg-[#00F076] text-black hover:opacity-90'
+              ${isDisabled
+                ? 'bg-[#00F076]/40 text-black cursor-not-allowed'
+                : 'bg-[#00F076] text-black hover:opacity-90'
               }`}
           >
             {loading ? 'Signing in...' : 'Sign in'}

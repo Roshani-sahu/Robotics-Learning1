@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { paymentAPI } from '../services/api';
 import { auth } from '../config/firebase';
+import { useNavigate } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -8,64 +9,75 @@ declare global {
   }
 }
 
-export const usePayment = () => {
+export const usePayment = (onPaymentSuccess?: () => void) => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const initializePayment = async (courseId: string) => {
     setLoading(true);
     try {
       console.log('Initializing payment for course:', courseId);
-      
-      // Use your working Razorpay endpoint
-      const orderResponse = await axios.post(`http://localhost:4000/api/payments/orders/24999`);
+
+      // 1. Create Order (Secure API)
+      const orderResponse = await paymentAPI.createOrder(courseId);
       console.log('Order response:', orderResponse.data);
-      
-      const { id: orderId, amount, currency } = orderResponse.data;
+
+      const { orderId, amount, currency, courseTitle } = orderResponse.data;
 
       const options = {
-        key: 'rzp_test_8CxHBNuMQt1Qn8', // Your actual Razorpay key
+        key: 'rzp_test_8CxHBNuMQt1Qn8', // Ideally from env: import.meta.env.VITE_RAZORPAY_KEY_ID
         amount,
         currency,
-        name: 'Course Platform',
-        description: 'Modern Robot Learning from Scratch',
+        name: 'Design Dharma',
+        description: courseTitle || 'Course Enrollment',
         order_id: orderId,
         handler: async (response: any) => {
           try {
-            // Get user data
-            const user = auth.currentUser;
-            
-            // Call success endpoint with purchase data
-            await axios.post('http://localhost:4000/api/payments/success', {
+            console.log('Payment success, verifying...', response);
+            // 2. Verify Payment
+            await paymentAPI.verifyPayment({
               orderId: response.razorpay_order_id,
               paymentId: response.razorpay_payment_id,
-              courseId: courseId,
-              uid: user?.uid
+              signature: response.razorpay_signature
             });
-            
-            alert('Payment successful! Course added to your dashboard.');
-            window.location.href = '/dashboard';
+
+            // 3. Show success popup or redirect
+            if (onPaymentSuccess) {
+              onPaymentSuccess();
+            } else {
+              alert('Payment successful! You now have access.');
+              navigate('/dashboard');
+            }
           } catch (error) {
-            console.error('Payment success error:', error);
-            alert('Payment completed! Please check your dashboard.');
-            window.location.href = '/dashboard';
+            console.error('Payment verification error:', error);
+            alert('Payment successful but verification failed. Please contact support.');
+            navigate('/dashboard');
           }
         },
         prefill: {
-          name: 'User Name',
-          email: 'user@example.com',
+          name: auth.currentUser?.displayName || '',
+          email: auth.currentUser?.email || '',
         },
         theme: {
           color: '#00F076',
         },
+        modal: {
+          ondismiss: function () {
+            setLoading(false);
+          }
+        }
       };
 
       const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', function (response: any) {
+        alert(response.error.description);
+        setLoading(false);
+      });
       rzp.open();
     } catch (error: any) {
       console.error('Payment initialization error:', error);
       const errorMessage = error.response?.data?.error || error.message || 'Payment initialization failed';
       alert(errorMessage);
-    } finally {
       setLoading(false);
     }
   };

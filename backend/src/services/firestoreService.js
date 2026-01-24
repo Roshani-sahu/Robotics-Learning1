@@ -16,6 +16,15 @@ class FirestoreService {
     return doc.exists ? { id: doc.id, ...doc.data() } : null;
   }
 
+  static async updateUser(uid, updateData) {
+    console.log(`FirestoreService: Updating user ${uid} with data:`, updateData);
+    await db.collection('users').doc(uid).set({
+      ...updateData,
+      updatedAt: new Date()
+    }, { merge: true });
+    console.log('FirestoreService: Update successful');
+  }
+
   // Courses
   static async getAllCourses() {
     const snapshot = await db.collection('courses').where('isActive', '==', true).get();

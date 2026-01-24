@@ -1,8 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Curriculm2 from '../components/Curriculum/Curriculum2'
 
+
 const Curriculum: React.FC = () => {
+    const navigate = useNavigate()
   const curriculumWeeks = [
     {
       week: 1,
@@ -186,6 +189,7 @@ const Curriculum: React.FC = () => {
           {/* CTA */}
           <div className='flex justify-center mt-20'>
             <button
+            onClick={() => navigate('/courses')}
               className='px-10 py-4 rounded-full font-semibold text-black 
               bg-gradient-to-r from-[#00F076] to-[#00c45f]
               hover:shadow-[0_0_30px_rgba(0,240,118,0.4)]

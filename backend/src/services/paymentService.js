@@ -23,7 +23,7 @@ class PaymentService {
       const options = {
         amount: course.price * 100, // Convert to paise
         currency: 'INR',
-        receipt: `course_${courseId}_${Date.now()}`,
+        receipt: `r_${Date.now()}`,
         notes: {
           courseId,
           uid

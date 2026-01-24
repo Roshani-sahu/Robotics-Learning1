@@ -42,7 +42,7 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 0; // Let system assign port
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT,  () => {
   const actualPort = PORT === 0 ? server.address()?.port : PORT;
   console.log(`Server running on port ${actualPort}`);
   console.log(`Environment: ${process.env.NODE_ENV}`);

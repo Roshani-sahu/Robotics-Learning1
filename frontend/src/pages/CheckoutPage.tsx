@@ -9,10 +9,12 @@ import {
 import Header2 from "../components/Header2"
 import { usePayment } from "../hooks/usePayment"
 import { useAuth } from "../context/AuthContext"
+import PaymentSuccessPopup from "../components/PaymentSuccessPopup"
 
 const CheckoutPage: React.FC = () => {
-  const { user } = useAuth()
-  const { initializePayment, loading } = usePayment()
+  const { user, loading: authLoading } = useAuth()
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
+  const { initializePayment, loading } = usePayment(() => setShowSuccessPopup(true))
   const [paymentMethod, setPaymentMethod] = useState<"razorpay" | "paypal">("razorpay")
   const [agree, setAgree] = useState(false)
 
@@ -25,12 +27,13 @@ const CheckoutPage: React.FC = () => {
 
   const handlePayment = () => {
     if (!agree) return
-    
+    if (authLoading) return
+
     if (!user) {
       alert('Please login first');
       return;
     }
-    
+
     if (paymentMethod === "razorpay") {
       console.log('User authenticated:', user.email);
       initializePayment(courseData.id)
@@ -40,6 +43,7 @@ const CheckoutPage: React.FC = () => {
   }
 
   return (
+    <>
     <section className="min-h-screen bg-black text-white px-6 pt-24 pb-16">
       <Header2 />
 
@@ -102,8 +106,8 @@ const CheckoutPage: React.FC = () => {
               onClick={() => setPaymentMethod("razorpay")}
               className={`w-full p-5 rounded-xl border transition text-left
               ${paymentMethod === "razorpay"
-                ? "border-[#00F076] bg-[#00F076]/10"
-                : "border-white/10 bg-white/5 hover:bg-white/10"}`}
+                  ? "border-[#00F076] bg-[#00F076]/10"
+                  : "border-white/10 bg-white/5 hover:bg-white/10"}`}
             >
               <div className="flex justify-between items-center">
                 <div className="space-y-1">
@@ -221,8 +225,8 @@ const CheckoutPage: React.FC = () => {
             className={`w-full py-4 rounded-xl font-semibold text-black
             flex items-center justify-center gap-2 transition
             ${agree && !loading
-              ? "bg-[#00F076] hover:scale-[1.02]"
-              : "bg-gray-600 cursor-not-allowed"}`}
+                ? "bg-[#00F076] hover:scale-[1.02]"
+                : "bg-gray-600 cursor-not-allowed"}`}
           >
             <Lock size={16} />
             {loading ? "Processing..." : "Pay ₹24,999 & Enroll Now"}
@@ -245,6 +249,12 @@ const CheckoutPage: React.FC = () => {
         }
       `}</style>
     </section>
+    
+    <PaymentSuccessPopup 
+      isOpen={showSuccessPopup} 
+      onClose={() => setShowSuccessPopup(false)} 
+    />
+    </>
   )
 }
 
