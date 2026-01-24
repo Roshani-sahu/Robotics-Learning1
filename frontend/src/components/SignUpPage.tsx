@@ -2,14 +2,17 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Header2 from '../components/Header2'
 import { Mail, Lock, Eye, EyeOff, User, CheckCircle } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate()
+  const { signup } = useAuth()
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [termsAccepted, setTermsAccepted] = useState(false)
+  const [error, setError] = useState('')
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -29,14 +32,17 @@ const SignUpPage: React.FC = () => {
     if (!isFormValid || isSubmitting) return
 
     setIsSubmitting(true)
+    setError('')
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      await signup(email, password)
       setShowSuccessPopup(true)
 
       setTimeout(() => {
         navigate('/login')
       }, 3000)
+    } catch (error: any) {
+      setError(error.message || 'Signup failed')
     } finally {
       setIsSubmitting(false)
     }
@@ -59,7 +65,7 @@ const SignUpPage: React.FC = () => {
               Account Created Successfully
             </h3>
             <p className='text-sm text-white/70 text-center'>
-              Redirecting to login…
+              Please check your email to verify your account, then login.
             </p>
           </div>
         </div>
@@ -94,6 +100,12 @@ const SignUpPage: React.FC = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className='space-y-6'>
+          {/* Error Message */}
+          {error && (
+            <div className='bg-red-500/10 border border-red-500/20 rounded-xl p-3'>
+              <p className='text-red-400 text-sm'>{error}</p>
+            </div>
+          )}
           {/* Full Name */}
           <div>
             <label className='block text-xs mb-2 text-white/80'>

@@ -1,13 +1,37 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Header2 from '../components/Header2'
 import { Mail, Lock, Eye } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { login } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const isDisabled = !email || !password
+  const isDisabled = !email || !password || loading
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (isDisabled) return
+
+    setLoading(true)
+    setError('')
+
+    try {
+      await login(email, password)
+      const from = (location.state as any)?.from || '/dashboard'
+      navigate(from, { replace: true })
+    } catch (error: any) {
+      setError(error.message || 'Login failed')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className='min-h-screen w-full bg-black flex items-center justify-center px-4'>
@@ -34,7 +58,13 @@ const LoginPage: React.FC = () => {
         </div>
 
         {/* Form */}
-        <form className='space-y-6'>
+        <form onSubmit={handleSubmit} className='space-y-6'>
+          {/* Error Message */}
+          {error && (
+            <div className='bg-red-500/10 border border-red-500/20 rounded-xl p-3'>
+              <p className='text-red-400 text-sm'>{error}</p>
+            </div>
+          )}
           {/* Email */}
           <div>
             <label className='block text-sm mb-2 text-white/80'>Email</label>
@@ -90,13 +120,12 @@ const LoginPage: React.FC = () => {
             type='submit'
             disabled={isDisabled}
             className={`w-full rounded-xl py-3 font-semibold transition
-              ${
-                isDisabled
-                  ? 'bg-[#00F076]/40 text-black cursor-not-allowed'
-                  : 'bg-[#00F076] text-black hover:opacity-90'
+              ${isDisabled
+                ? 'bg-[#00F076]/40 text-black cursor-not-allowed'
+                : 'bg-[#00F076] text-black hover:opacity-90'
               }`}
           >
-            Sign in
+            {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 

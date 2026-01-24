@@ -102,6 +102,7 @@ export default function HeroSection () {
 
             <div className='flex items-center justify-center gap-6 mb-16 -mt-4 hero-buttons'>
               <button
+              onClick={() => navigate('/courses')}
                 className='px-8 py-2 rounded-lg font-semibold text-black hero-button'
                 style={{ backgroundColor: '#00F076' }}
               >

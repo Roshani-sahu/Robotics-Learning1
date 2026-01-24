@@ -10,32 +10,40 @@ import Instructor from './pages/Instructor'
 import FAQ from './pages/Faq'
 import LoginPage from './components/LoginPage'
 import SignUpPage from './components/SignUpPage'
+import ForgotPasswordPage from './components/ForgotPasswordPage'
 import CoursePage from './pages/CoursePage'
 import Dashboard from './pages/Dashboard'
 import CheckoutPage from './pages/CheckoutPage'
 import ProfilePage from './pages/ProfilePage'
 import Layout from './components/Layout'
+import { AuthProvider } from './context/AuthContext'
+
+import PurchasedCourse from "./pages/PurchasedCourse.tsx"
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-         
-        <Route path='/' element={<HomePage />} />
-        <Route path='/curriculum' element={<Curriculum />} />
-        <Route path='/schedule' element={<Schedule />} />
-        <Route path='/instructor' element={<Instructor />} />
-        <Route path='/faq' element={<FAQ />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignUpPage />} />
-        <Route path='/courses' element={<CoursePage />} />
-        <Route path='/checkout' element={<CheckoutPage />} />
-         <Route element={<Layout />}>
-                 <Route path='/dashboard' element={<Dashboard />} />
-
-        <Route path='/profile' element={<ProfilePage />} />
-         </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/curriculum' element={<Curriculum />} />
+          <Route path='/schedule' element={<Schedule />} />
+          <Route path='/instructor' element={<Instructor />} />
+          <Route path='/faq' element={<FAQ />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignUpPage />} />
+          <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+          <Route path='/courses' element={<CoursePage />} />
+          <Route path='/checkout' element={<CheckoutPage />} />
+          <Route element={<Layout />}>
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/profile' element={<ProfilePage />} />
+            <Route path='/purchased-course/:courseId' element={<PurchasedCourse/>} />
+       
+            
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>
 )
