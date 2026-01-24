@@ -6,7 +6,8 @@ import {
   ChevronDown
 } from "lucide-react"
 import Header2 from "../components/Header2"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 const curriculum = [
   { title: "Zoom Link for Lectures", lessons: 1 },
@@ -27,6 +28,8 @@ const curriculum = [
 
 const CoursePage: React.FC = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { user } = useAuth()
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
@@ -132,10 +135,16 @@ const CoursePage: React.FC = () => {
               <button
                 className="w-full py-4 rounded-xl font-semibold text-black
                 bg-[#00F076] hover:scale-[1.03]
-                transition duration-300" 
-                onClick={() => navigate("/checkout")}
+                transition duration-300"
+                onClick={() => {
+                  if (!user) {
+                    navigate("/login", { state: { from: location.pathname } })
+                  } else {
+                    navigate("/checkout")
+                  }
+                }}
               >
-                Go To Checkout
+                {user ? "Go To Checkout" : "Login to Enroll"}
               </button>
 
               <p className="text-xs text-gray-400 text-center mt-3">

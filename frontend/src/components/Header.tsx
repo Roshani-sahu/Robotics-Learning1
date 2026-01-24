@@ -33,8 +33,8 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to='/' className='flex items-center gap-3'>
             <img
-              src='/media/DesignDharma.png'
-              alt='DesignDharma'
+              src='/media/LogoBidyut.svg'
+              alt='LogoBidyut'
               className='h-7 sm:h-8 w-auto cursor-pointer'
             />
           </Link>

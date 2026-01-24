@@ -52,7 +52,7 @@ const Sidebar: React.FC = () => {
           </nav>
 
           {/* DESKTOP LOGOUT BOTTOM */}
-          <div className='p-4 border-t border-white/10'>
+          {/* <div className='p-4 border-t border-white/10'>
             <button
               onClick={() => navigate('/courses')}
               className='w-full flex items-center gap-2 px-3 py-2 rounded-lg
@@ -61,7 +61,7 @@ const Sidebar: React.FC = () => {
               <LogOut size={16} />
               <span className='text-sm'>Logout</span>
             </button>
-          </div>
+          </div> */}
         </div>
       </aside>
 

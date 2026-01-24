@@ -2,33 +2,95 @@ import React, { useState } from "react"
 import {
   Camera,
   Mail,
-//   User,
   ShieldCheck,
-//   CalendarDays
 } from "lucide-react"
+import { useAuth } from '../context/AuthContext'
+import { authAPI } from '../services/api'
 
 const ProfilePage: React.FC = () => {
+  const { user } = useAuth()
   const [editing, setEditing] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+
+  // Form State
+  const [profileData, setProfileData] = useState({
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    photoURL: ''
+  })
+
+  // Fetch Profile on Load
+  React.useEffect(() => {
+    if (user) fetchProfile();
+  }, [user]);
+
+  const fetchProfile = async () => {
+    try {
+      const response = await authAPI.getProfile();
+      const backendUser = response.data.user;
+      setProfileData({
+        firstName: backendUser.firstName || '',
+        middleName: backendUser.middleName || '',
+        lastName: backendUser.lastName || '',
+        photoURL: backendUser.photoURL || ''
+      });
+    } catch (error) {
+      console.error('Failed to fetch profile', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!editing) {
+      setEditing(true);
+      return;
+    }
+
+    setSaving(true);
+    try {
+      await authAPI.updateProfile(profileData);
+      setEditing(false);
+      // alert('Profile updated!');
+    } catch (error) {
+      console.error('Failed to update profile', error);
+      alert('Failed to update profile');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setProfileData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handlePhotoUpload = () => {
+    // For now, prompt for URL or implement file upload later
+    const url = prompt("Enter new profile image URL:", profileData.photoURL);
+    if (url !== null) handleChange('photoURL', url);
+  }
+
+  if (loading) return <div className="text-white text-center pt-20">Loading profile...</div>
 
   return (
-    <section className=" bg-black text-white px-6  ">
-     
-
-      <div className="max-w-[1270px]  mx-auto space-y-10">
+    <section className="bg-black text-white px-6">
+      <div className="max-w-[1270px] mx-auto space-y-10">
 
         {/* ================= HEADER ================= */}
         <div>
-          <h1 className="text-4xl  font-semibold">Profile</h1>
+          <h1 className="text-4xl font-semibold">Profile</h1>
           <p className="text-gray-400 mt-2">
             Manage your identity and account preferences
           </p>
         </div>
 
         {/* ================= MAIN LAYOUT ================= */}
-        <div className="grid grid-cols-1  lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
           {/* ========== LEFT: IDENTITY PANEL ========== */}
-          <div className="lg:col-span-4 ">
+          <div className="lg:col-span-4">
             <div className="sticky top-28 rounded-3xl bg-gradient-to-br
               from-white/5 via-white/3 to-[#00F076]/10
               border border-white/10 p-8">
@@ -36,35 +98,62 @@ const ProfilePage: React.FC = () => {
               {/* Avatar */}
               <div className="flex flex-col items-center">
                 <div className="relative">
-                  <img
-                    src="/media/avatar.avif"
-                    alt="Profile"
-                    className="w-36 h-36 rounded-full object-cover
-                    ring-4 ring-[#00F076]/30"
-                  />
-                  <button
-                    className="absolute bottom-2 right-2
-                    w-9 h-9 rounded-full bg-[#00F076]
-                    flex items-center justify-center text-black
-                    hover:scale-105 transition"
-                  >
-                    <Camera size={18} />
-                  </button>
+                  {profileData.photoURL ? (
+                    <img
+                      src={profileData.photoURL}
+                      alt="Profile"
+                      onError={(e) => {
+                        // If image fails to load, clear the URL so it falls back to initials
+                        // We do this by locally updating state only if it's not already cleared to avoid loops
+                        // But simpler approach for now is just valid src check or manual state update
+                        // For this implementation, let's keep it simple:
+                        // optimizing by letting user re-upload or see broken image is better than complex fallback loops
+                        // But to match request:
+                        e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          const div = document.createElement('div');
+                          div.className = "w-36 h-36 rounded-full bg-gradient-to-br from-[#00F076]/20 to-[#00F076]/5 ring-4 ring-[#00F076]/30 flex items-center justify-center text-4xl font-bold text-[#00F076]";
+                          div.innerText = (profileData.firstName?.[0] || user?.email?.[0] || 'U').toUpperCase();
+                          parent.insertBefore(div, e.currentTarget);
+                        }
+                      }}
+                      className="w-36 h-36 rounded-full object-cover ring-4 ring-[#00F076]/30"
+                    />
+                  ) : (
+                    <div className="w-36 h-36 rounded-full bg-gradient-to-br from-[#00F076]/20 to-[#00F076]/5 ring-4 ring-[#00F076]/30 flex items-center justify-center">
+                      <span className="text-4xl font-bold text-[#00F076]">
+                        {(profileData.firstName?.[0] || user?.email?.[0] || 'U').toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+
+                  {editing && (
+                    <button
+                      onClick={handlePhotoUpload}
+                      className="absolute bottom-2 right-2
+                        w-9 h-9 rounded-full bg-[#00F076]
+                        flex items-center justify-center text-black
+                        hover:scale-105 transition"
+                    >
+                      <Camera size={18} />
+                    </button>
+                  )}
                 </div>
 
                 <h3 className="mt-4 text-xl font-semibold">
-                  Roshani Sahu
+                  {profileData.firstName ? `${profileData.firstName} ${profileData.lastName}` : (user?.email?.split('@')[0] || 'User')}
                 </h3>
                 <p className="text-sm text-gray-400">
-                  Student • Active
+                  Student • {user?.emailVerified ? 'Verified' : 'Unverified'}
                 </p>
               </div>
 
               {/* Account Chips */}
               <div className="mt-8 space-y-4">
                 <StatusItem label="Role" value="Student" color="green" />
-                <StatusItem label="Status" value="Active" color="pink" />
-                <StatusItem label="Member Since" value="Jan 21, 2026" />
+                <StatusItem label="Status" value={user?.emailVerified ? 'Verified' : 'Unverified'} color={user?.emailVerified ? 'green' : 'pink'} />
+                <StatusItem label="Member Since" value={new Date().toLocaleDateString()} />
               </div>
             </div>
           </div>
@@ -79,21 +168,39 @@ const ProfilePage: React.FC = () => {
                   Personal Information
                 </h2>
                 <button
-                  onClick={() => setEditing(!editing)}
-                  className="px-5 py-2 rounded-xl border border-white/10
-                  bg-white/5 hover:bg-white/10 transition"
+                  onClick={handleSave}
+                  disabled={saving}
+                  className={`px-5 py-2 rounded-xl border border-white/10
+                  bg-white/5 hover:bg-white/10 transition
+                  ${saving ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  {editing ? "Save Changes" : "Edit Profile"}
+                  {saving ? "Saving..." : editing ? "Save Changes" : "Edit Profile"}
                 </button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input label="First Name" value="Roshani" disabled={!editing} />
-                <Input label="Middle Name" placeholder="Optional" disabled={!editing} />
-                <Input label="Last Name" value="Sahu" disabled={!editing} />
+                <Input
+                  label="First Name"
+                  value={profileData.firstName}
+                  onChange={(e: any) => handleChange('firstName', e.target.value)}
+                  disabled={!editing}
+                />
+                <Input
+                  label="Middle Name"
+                  placeholder="Optional"
+                  value={profileData.middleName}
+                  onChange={(e: any) => handleChange('middleName', e.target.value)}
+                  disabled={!editing}
+                />
+                <Input
+                  label="Last Name"
+                  value={profileData.lastName}
+                  onChange={(e: any) => handleChange('lastName', e.target.value)}
+                  disabled={!editing}
+                />
                 <Input
                   label="Email"
-                  value="roshanishahu2003@gmail.com"
+                  value={user?.email || ''}
                   disabled
                   icon={<Mail size={16} />}
                   helper="Email cannot be changed"
@@ -105,7 +212,7 @@ const ProfilePage: React.FC = () => {
             <section className="pt-8 border-t border-white/10">
               <div className="flex items-center gap-3 text-gray-300">
                 <ShieldCheck className="text-[#00F076]" />
-                Your account is verified and secure
+                Your account is {user?.emailVerified ? 'verified and secure' : 'created but not verified'}
               </div>
             </section>
           </div>
@@ -123,7 +230,8 @@ const Input = ({
   placeholder,
   disabled,
   icon,
-  helper
+  helper,
+  onChange
 }: any) => (
   <div className="space-y-2">
     <label className="text-sm text-gray-400">{label}</label>
@@ -135,7 +243,8 @@ const Input = ({
       )}
       <input
         disabled={disabled}
-        defaultValue={value}
+        value={value}
+        onChange={onChange}
         placeholder={placeholder}
         className={`w-full px-4 py-3 rounded-xl
           ${icon ? "pl-10" : ""}
